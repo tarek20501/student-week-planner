@@ -20,12 +20,8 @@ reason why I chose this idea to be my personal project for CPSC 210.
 
 ## User Stories
 - As a student, I want to add my busy time to my weekly planner by drawing red boxes.
-- As a student, I want to modify the red boxes by changing the size of the box or dragging it across 
-  the week.
-- As a student, I want to delete the red boxes by selecting the red box and pressing delete.
-- As a student, I want to see the time blocks where I am not busy in green.
 - As a student, I want to add my to-do tasks to my weekly planner by drawing yellow boxes.
-- As a student, I want to modify the yellow boxes by changing the size of the box or dragging it 
-  across the week.
-- As a student, I want to label the yellow boxes with few words to identify the tasks.
-- As a student, I want to delete the yellow boxes by selecting the box and pressing delete.
+- As a student, I want to label the boxes with few words after drawing them and modify the labels later.
+- As a student, I want to see the areas where I did not draw any box in green to visualize my free time.
+- As a student, I want to delete the any box by selecting the box and pressing delete.
+- As a student, I want to modify any box by changing the size of the box or dragging it across the week.
