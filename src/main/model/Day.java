@@ -14,7 +14,6 @@ public class Day {
         this.timeBlocks = new ArrayList<TimeBlock>();
     }
 
-    // REQUIRES: timeblock does not conflict with the allocated time blocks on this day.
     // MODIFIES: this
     // EFFECTS: Add timeBlock to the list of allocated time blocks on this day. returns
     // true on success and false on failure due to time conflicts
@@ -40,24 +39,22 @@ public class Day {
     // MODIFIES: this, timeBlock
     // EFFECTS: Moves given timeBlock to the given day at the given start and end times.
     // if the given day refuses to add timeBlock, it returns false. Otherwise, it removes
-    // the timeBlock from this day and returns true.
+    // the timeBlock from this day, modifies timeblock accordingly and returns true.
     public boolean moveTimeBlock(TimeBlock timeBlock, Day day, Time start, Time end) {
         return false; // stub
     }
 
-    // EFFECTS: return the label of this day.
     public String getLabel() {
         return label;
     }
 
-    // EFFECTS: return the list of time blocks on this day.
     public List<TimeBlock> getTimeBlocks() {
         return timeBlocks;
     }
 
     // EFFECTS: Checks if the given timeblock conflicts with any time block on this day.
     // if it does, returns false. Otherwise, returns true. if the given timeBlock already
-    // exist on this day, it skips checking the time block against itself.
+    // exist on this day, it skips checking if it conflicts with itself.
     private boolean isNoConflict(TimeBlock timeBlock) {
         return false; // stub
     }

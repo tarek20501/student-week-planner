@@ -6,7 +6,7 @@ public class TimeBlock {
     private String label;
 
     // REQUIRES: start time is earlier than end time
-    // EFFECTS: initializes start and end time of this time block to start and end
+    // EFFECTS: initializes start and end times of this time block to start and end
     // respectively. label of this day is initialized to empty string.
     public TimeBlock(Time start, Time end) {
         startTime = start;
