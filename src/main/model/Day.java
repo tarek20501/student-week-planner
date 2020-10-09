@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class Day {
     // EFFECTS: Resize timeBlock to the given start and end times. Returns true on
     // success and updates timeBlock's start and end times accordingly. Otherwise,
     // returns false on failure due to time conflicts.
-    public boolean resizeTimeBlock(TimeBlock timeBlock, Time start, Time end) {
+    public boolean resizeTimeBlock(TimeBlock timeBlock, LocalTime start, LocalTime end) {
         return false; // stub
     }
 
@@ -40,7 +41,7 @@ public class Day {
     // EFFECTS: Moves given timeBlock to the given day at the given start and end times.
     // if the given day refuses to add timeBlock, it returns false. Otherwise, it removes
     // the timeBlock from this day, modifies timeblock accordingly and returns true.
-    public boolean moveTimeBlock(TimeBlock timeBlock, Day day, Time start, Time end) {
+    public boolean moveTimeBlock(TimeBlock timeBlock, Day day, LocalTime start, LocalTime end) {
         return false; // stub
     }
 

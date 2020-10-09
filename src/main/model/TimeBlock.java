@@ -1,24 +1,26 @@
 package model;
 
+import java.time.LocalTime;
+
 public class TimeBlock {
-    private Time startTime;
-    private Time endTime;
+    private LocalTime startTime;
+    private LocalTime endTime;
     private String label;
 
     // REQUIRES: start time is earlier than end time
     // EFFECTS: initializes start and end times of this time block to start and end
     // respectively. label of this day is initialized to empty string.
-    public TimeBlock(Time start, Time end) {
+    public TimeBlock(LocalTime start, LocalTime end) {
         startTime = start;
         endTime = end;
         label = "";
     }
 
-    public void setStartTime(Time startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
-    public void setEndTime(Time endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
 
@@ -26,11 +28,11 @@ public class TimeBlock {
         this.label = label;
     }
 
-    public Time getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public Time getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
