@@ -19,30 +19,47 @@ public class Day {
     // EFFECTS: Add timeBlock to the list of allocated time blocks on this day. returns
     // true on success and false on failure due to time conflicts
     public boolean addTimeBlock(TimeBlock timeBlock) {
-        return false; // stub
+        if (isNoConflict(timeBlock)) {
+            timeBlocks.add(timeBlock);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // MODIFIES: this
     // EFFECTS: Deletes timeblock from the list of allocated time blocks on this day if
-    // it exists. Otherwise, does nothing.
-    public void deleteTimeBlock(TimeBlock timeBlock) {
-
-    }
-
-    // MODIFIES: this, timeBlock
-    // EFFECTS: Resize timeBlock to the given start and end times. Returns true on
-    // success and updates timeBlock's start and end times accordingly. Otherwise,
-    // returns false on failure due to time conflicts.
-    public boolean resizeTimeBlock(TimeBlock timeBlock, LocalTime start, LocalTime end) {
-        return false; // stub
+    // it exists and returns true. Otherwise, does nothing and returns false.
+    public boolean deleteTimeBlock(TimeBlock timeBlock) {
+        return timeBlocks.remove(timeBlock);
     }
 
     // MODIFIES: this, timeBlock
     // EFFECTS: Moves given timeBlock to the given day at the given start and end times.
     // if the given day refuses to add timeBlock, it returns false. Otherwise, it removes
     // the timeBlock from this day, modifies timeblock accordingly and returns true.
-    public boolean moveTimeBlock(TimeBlock timeBlock, Day day, LocalTime start, LocalTime end) {
-        return false; // stub
+    public boolean modifyTimeBlock(TimeBlock timeBlock, Day day, LocalTime newStart, LocalTime newEnd) {
+        // Cache old times
+        LocalTime oldStart = timeBlock.getStartTime();
+        LocalTime oldEnd = timeBlock.getEndTime();
+        // Apply new times
+        timeBlock.setStartTime(newStart);
+        timeBlock.setEndTime(newEnd);
+        // Check for conflicts
+        if (day.equals(this)) {
+            if (isNoConflict(timeBlock)) {
+                return true;
+            }
+        } else {
+            if (day.addTimeBlock(timeBlock)) {
+                deleteTimeBlock(timeBlock);
+                return true;
+            }
+        }
+        // Restore old times since there is conflict
+        timeBlock.setStartTime(oldStart);
+        timeBlock.setEndTime(oldEnd);
+        return false;
     }
 
     public String getLabel() {
@@ -56,7 +73,31 @@ public class Day {
     // EFFECTS: Checks if the given timeblock conflicts with any time block on this day.
     // if it does, returns false. Otherwise, returns true. if the given timeBlock already
     // exist on this day, it skips checking if it conflicts with itself.
-    private boolean isNoConflict(TimeBlock timeBlock) {
-        return false; // stub
+    private boolean isNoConflict(TimeBlock newTimeBlock) {
+        LocalTime newStart = newTimeBlock.getStartTime();
+        LocalTime newEnd = newTimeBlock.getEndTime();
+
+        for (TimeBlock currTimeBlock : timeBlocks) {
+            if (newTimeBlock == currTimeBlock) {
+                continue;
+            }
+
+            LocalTime currStart = currTimeBlock.getStartTime();
+            LocalTime currEnd = currTimeBlock.getEndTime();
+
+            if (newStart.isAfter(currStart) && newStart.isBefore(currEnd)) {
+                return false;
+            }
+            if (newEnd.isAfter(currStart) && newEnd.isBefore(currEnd)) {
+                return false;
+            }
+            if (currStart.isAfter(newStart) && currEnd.isBefore(newEnd)) {
+                return false;
+            }
+            if (newStart.equals(currStart) || newEnd.equals(currEnd)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
