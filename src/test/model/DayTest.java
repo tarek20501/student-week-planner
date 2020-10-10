@@ -28,9 +28,11 @@ class DayTest {
     public void testAddTimeBlockNoConflictGap() {
         TimeBlock timeBlock1 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
         TimeBlock timeBlock2 = new TimeBlock(LocalTime.of(13,0), LocalTime.of(14,0));
+        TimeBlock timeBlock3 = new TimeBlock(LocalTime.of(8,0), LocalTime.of(9,0));
         assertTrue(testDay.addTimeBlock(timeBlock1));
         assertTrue(testDay.addTimeBlock(timeBlock2));
-        assertEquals(2, testDay.getTimeBlocks().size());
+        assertTrue(testDay.addTimeBlock(timeBlock3));
+        assertEquals(3, testDay.getTimeBlocks().size());
     }
 
     @Test

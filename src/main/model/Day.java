@@ -12,7 +12,7 @@ public class Day {
     // time blocks that will be allocated on this day.
     public Day(String label) {
         this.label = label;
-        this.timeBlocks = new ArrayList<TimeBlock>();
+        this.timeBlocks = new ArrayList<>();
     }
 
     // MODIFIES: this
@@ -28,16 +28,17 @@ public class Day {
     }
 
     // MODIFIES: this
-    // EFFECTS: Deletes timeblock from the list of allocated time blocks on this day if
+    // EFFECTS: Deletes timeBlock from the list of allocated time blocks on this day if
     // it exists and returns true. Otherwise, does nothing and returns false.
     public boolean deleteTimeBlock(TimeBlock timeBlock) {
         return timeBlocks.remove(timeBlock);
     }
 
     // MODIFIES: this, timeBlock
-    // EFFECTS: Moves given timeBlock to the given day at the given start and end times.
-    // if the given day refuses to add timeBlock, it returns false. Otherwise, it removes
-    // the timeBlock from this day, modifies timeblock accordingly and returns true.
+    // EFFECTS: Moves timeBlock to day and sets its start and end times to newStart and newEnd
+    // respectively. If day equals to this day, checks for conflicts and applies the new times (returns true).
+    // If day is another day, tries to add it to that day. If the other day adds it, it is removed from this
+    // day (returns true). Otherwise, nothing happens and false is returned.
     public boolean modifyTimeBlock(TimeBlock timeBlock, Day day, LocalTime newStart, LocalTime newEnd) {
         // Cache old times
         LocalTime oldStart = timeBlock.getStartTime();
@@ -70,7 +71,7 @@ public class Day {
         return timeBlocks;
     }
 
-    // EFFECTS: Checks if the given timeblock conflicts with any time block on this day.
+    // EFFECTS: Checks if the given timeBlock conflicts with any time block on this day.
     // if it does, returns false. Otherwise, returns true. if the given timeBlock already
     // exist on this day, it skips checking if it conflicts with itself.
     private boolean isNoConflict(TimeBlock newTimeBlock) {
@@ -85,16 +86,10 @@ public class Day {
             LocalTime currStart = currTimeBlock.getStartTime();
             LocalTime currEnd = currTimeBlock.getEndTime();
 
-            if (newStart.isAfter(currStart) && newStart.isBefore(currEnd)) {
-                return false;
-            }
-            if (newEnd.isAfter(currStart) && newEnd.isBefore(currEnd)) {
-                return false;
-            }
-            if (currStart.isAfter(newStart) && currEnd.isBefore(newEnd)) {
-                return false;
-            }
-            if (newStart.equals(currStart) || newEnd.equals(currEnd)) {
+            if ((newStart.isAfter(currStart) && newStart.isBefore(currEnd))
+                    || (newEnd.isAfter(currStart) && newEnd.isBefore(currEnd))
+                    || (currStart.isAfter(newStart) && currEnd.isBefore(newEnd))
+                    || (newStart.equals(currStart) || newEnd.equals(currEnd))) {
                 return false;
             }
         }
