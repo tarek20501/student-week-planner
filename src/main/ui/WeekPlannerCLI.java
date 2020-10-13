@@ -82,16 +82,18 @@ public class WeekPlannerCLI {
     private void modifyTimeBlock() {
         showTimeBlocksInWeek();
         Day chosenDay = getDayFromUser("to modify from");
+        if (chosenDay.getTimeBlocks().size() == 0) {
+            System.out.println("ERROR: There are no time blocks on " + chosenDay.getLabel());
+            return;
+        }
         showTimeBlocksInDay(chosenDay);
-        int timeBlockIndex = getIntInRangeFromUser(
-                "Enter the number of time block to modify",
+        int timeBlockIndex = getIntInRangeFromUser("Enter the number of time block to modify",
                 0,
                 chosenDay.getTimeBlocks().size() - 1);
         TimeBlock timeBlockToModify = chosenDay.getTimeBlocks().get(timeBlockIndex);
         Day targetDay = getDayFromUser("to move to");
         TimeBlock newTimeBlock = getTimeBlockFromUser("modify");
-        boolean success = chosenDay.modifyTimeBlock(
-                timeBlockToModify,
+        boolean success = chosenDay.modifyTimeBlock(timeBlockToModify,
                 targetDay,
                 newTimeBlock.getStartTime(),
                 newTimeBlock.getEndTime());
@@ -109,6 +111,10 @@ public class WeekPlannerCLI {
     private void deleteTimeBlock() {
         showTimeBlocksInWeek();
         Day chosenDay = getDayFromUser("to delete from");
+        if (chosenDay.getTimeBlocks().size() == 0) {
+            System.out.println("ERROR: There are no time blocks on " + chosenDay.getLabel());
+            return;
+        }
         showTimeBlocksInDay(chosenDay);
         int timeBlockIndex = getIntInRangeFromUser(
                 "Enter the number of time block to delete",
