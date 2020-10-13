@@ -3,7 +3,6 @@ package ui;
 import model.Day;
 import model.TimeBlock;
 
-import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,32 +10,18 @@ import java.util.Scanner;
 
 public class WeekPlannerCLI {
     private List<Day> week;
-    private Day mon;
-    private Day tue;
-    private Day wed;
-    private Day thu;
-    private Day fri;
-    private Day sat;
-    private Day sun;
     private boolean stillRunning;
     private Scanner userInput;
 
     public WeekPlannerCLI() {
         week = new ArrayList<>();
-        mon = new Day("Monday");
-        week.add(mon);
-        tue = new Day("Tuesday");
-        week.add(tue);
-        wed = new Day("Wednesday");
-        week.add(wed);
-        thu = new Day("Thursday");
-        week.add(thu);
-        fri = new Day("Friday");
-        week.add(fri);
-        sat = new Day("Saturday");
-        week.add(sat);
-        sun = new Day("Sunday");
-        week.add(sun);
+        week.add(new Day("Monday"));
+        week.add(new Day("Tuesday"));
+        week.add(new Day("Wednesday"));
+        week.add(new Day("Thursday"));
+        week.add(new Day("Friday"));
+        week.add(new Day("Saturday"));
+        week.add(new Day("Sunday"));
         stillRunning = true;
         userInput = new Scanner(System.in);
         System.out.println("Hello WeekPlanner");
@@ -84,8 +69,10 @@ public class WeekPlannerCLI {
         showTimeBlocksInWeek();
         Day chosenDay = getDayFromUser("to modify from");
         showTimeBlocksInDay(chosenDay);
-        System.out.print("Enter the number of time block to modify: ");
-        int timeBlockIndex = userInput.nextInt();
+        int timeBlockIndex = getIntInRangeFromUser(
+                "Enter the number of time block to modify",
+                0,
+                chosenDay.getTimeBlocks().size() - 1);
         TimeBlock timeBlockToModify = chosenDay.getTimeBlocks().get(timeBlockIndex);
         Day targetDay = getDayFromUser("to move to");
         TimeBlock newTimeBlock = getTimeBlockFromUser("modify");
@@ -105,8 +92,10 @@ public class WeekPlannerCLI {
         showTimeBlocksInWeek();
         Day chosenDay = getDayFromUser("to delete from");
         showTimeBlocksInDay(chosenDay);
-        System.out.print("Enter the number of time block to delete: ");
-        int timeBlockIndex = userInput.nextInt();
+        int timeBlockIndex = getIntInRangeFromUser(
+                "Enter the number of time block to delete",
+                0,
+                chosenDay.getTimeBlocks().size() - 1);
         TimeBlock timeBlockToDelete = chosenDay.getTimeBlocks().get(timeBlockIndex);
         if (chosenDay.deleteTimeBlock(timeBlockToDelete)) {
             System.out.println(timeBlockToDelete.getLabel() + " was deleted.");
@@ -117,20 +106,18 @@ public class WeekPlannerCLI {
 
     private Day getDayFromUser(String purpose) {
         System.out.println("0.Mon 1.Tue 2.Wed 3.Thu 4.Fri 5.Sat 6.Sun");
-        System.out.print("Enter the number of the day " + purpose + ": ");
-        int choice = userInput.nextInt();
+        int choice = getIntInRangeFromUser(
+                "Enter the number of the day " + purpose,
+                0,
+                6);
         return week.get(choice);
     }
 
     private TimeBlock getTimeBlockFromUser(String purpose) {
         System.out.print("Enter the label of the time block to " + purpose + ": ");
         String label = userInput.next();
-        System.out.print("Enter the start time of " + label + ": ");
-        String start = userInput.next();
-        System.out.print("Enter the end time of " + label + ": ");
-        String end = userInput.next();
-        LocalTime startTime = LocalTime.parse(start);
-        LocalTime endTime = LocalTime.parse(end);
+        LocalTime startTime = getTimeFromUser("Enter the start time of " + label);
+        LocalTime endTime = getTimeFromUser("Enter the end time of " + label);
         TimeBlock timeBlock = new TimeBlock(startTime, endTime);
         timeBlock.setLabel(label);
         return timeBlock;
@@ -149,7 +136,7 @@ public class WeekPlannerCLI {
     private void showTimeBlocksInDay(Day day) {
         int i = 0;
         for (TimeBlock timeBlock : day.getTimeBlocks()) {
-            System.out.print(Integer.toString(i) + ". ");
+            System.out.print(i + ". ");
             printTimeBlock(timeBlock);
             i++;
         }
@@ -167,5 +154,34 @@ public class WeekPlannerCLI {
         System.out.println("m: Modify a time block in your week");
         System.out.println("d: Delete a time block in your week");
         System.out.println("x: Exit the program");
+    }
+
+    private int getIntInRangeFromUser(String prompt, int start, int end) {
+        while (true) {
+            System.out.print(prompt + ": ");
+            try {
+                int choice = userInput.nextInt();
+                if (choice >= start && choice <= end) {
+                    return choice;
+                } else {
+                    System.out.println("ERROR: you entered an out-of-range integer.");
+                }
+            } catch (Exception e) {
+                System.out.println("ERROR: you entered a non-integer.");
+                userInput.nextLine();
+            }
+        }
+    }
+
+    private LocalTime getTimeFromUser(String prompt) {
+        while (true) {
+            System.out.print(prompt + ": ");
+            String timeStr = userInput.next();
+            try {
+                return LocalTime.parse(timeStr);
+            } catch (Exception e) {
+                System.out.println("ERROR: You must enter in this format HH:MM (HH:00-23, MM:00-59)");
+            }
+        }
     }
 }
