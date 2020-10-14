@@ -86,10 +86,10 @@ public class Day {
             LocalTime currStart = currTimeBlock.getStartTime();
             LocalTime currEnd = currTimeBlock.getEndTime();
 
-            if ((newStart.isAfter(currStart) && newStart.isBefore(currEnd))
-                    || (newEnd.isAfter(currStart) && newEnd.isBefore(currEnd))
-                    || (currStart.isAfter(newStart) && currEnd.isBefore(newEnd))
-                    || (newStart.equals(currStart) || newEnd.equals(currEnd))) {
+            if (!((newEnd.isBefore(currStart)
+                    || newEnd.equals(currStart))
+                    || newStart.isAfter(currEnd)
+                    || newStart.equals(currEnd))) {
                 return false;
             }
         }

@@ -39,17 +39,21 @@ class DayTest {
     public void testAddTimeBlockNoConflictNoGap() {
         TimeBlock timeBlock1 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
         TimeBlock timeBlock2 = new TimeBlock(LocalTime.of(11,0), LocalTime.of(12,0));
+        TimeBlock timeBlock3 = new TimeBlock(LocalTime.of(9,0), LocalTime.of(10,0));
         assertTrue(testDay.addTimeBlock(timeBlock1));
         assertTrue(testDay.addTimeBlock(timeBlock2));
-        assertEquals(2, testDay.getTimeBlocks().size());
+        assertTrue(testDay.addTimeBlock(timeBlock3));
+        assertEquals(3, testDay.getTimeBlocks().size());
     }
 
     @Test
     public void testAddTimeBlockConflictStartInAnother() {
         TimeBlock timeBlock1 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
         TimeBlock timeBlock2 = new TimeBlock(LocalTime.of(10,30), LocalTime.of(12,0));
+        TimeBlock timeBlock3 = new TimeBlock(LocalTime.of(10,30), LocalTime.of(11,0));
         assertTrue(testDay.addTimeBlock(timeBlock1));
         assertFalse(testDay.addTimeBlock(timeBlock2));
+        assertFalse(testDay.addTimeBlock(timeBlock3));
         assertEquals(1, testDay.getTimeBlocks().size());
     }
 
@@ -57,8 +61,10 @@ class DayTest {
     public void testAddTimeBlockConflictEndInAnother() {
         TimeBlock timeBlock1 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
         TimeBlock timeBlock2 = new TimeBlock(LocalTime.of(9,0), LocalTime.of(10,30));
+        TimeBlock timeBlock3 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(10,30));
         assertTrue(testDay.addTimeBlock(timeBlock1));
         assertFalse(testDay.addTimeBlock(timeBlock2));
+        assertFalse(testDay.addTimeBlock(timeBlock3));
         assertEquals(1, testDay.getTimeBlocks().size());
     }
 
