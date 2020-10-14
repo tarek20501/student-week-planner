@@ -18,14 +18,14 @@ you need to go through to set a calendar event all of which are unnecessary for 
 I have not found an app that is simple and quick-to-use to plan when I am doing what.
 
 ## User Stories (bold is what is implemented for phase 1)
-- **As a student, I want to add my busy time to my weekly planner by drawing red boxes.**(*)
-- **As a student, I want to add my to-do tasks to my weekly planner by drawing yellow boxes.**(*)
+- **As a student, I want to add my busy time to my weekly planner by drawing red boxes.** (*)
+- **As a student, I want to add my to-do tasks to my weekly planner by drawing yellow boxes.** (*)
 - **As a student, I want to label the boxes with few words after drawing them and modify the labels later.**
 - As a student, I want to see the areas where I did not draw any box in green to visualize my free time.
 - **As a student, I want to delete the any box by selecting the box and pressing delete.**
 - **As a student, I want to modify any box by changing the size of the box or dragging it across the week.**
 
-(*) There stories are counted as one for phase 1 since colors have not implemented yet. So what is implemented is users can add time blocks to their weekly planner. 
+(*) I counted these stories as one for phase 1 since colors have not implemented yet. So what is implemented is users can add time blocks to their weekly planner.
 
 ## UML Diagram:
 <img src="https://yuml.me/tarek20501/StudentWeekPlanner.jpg"></img>
