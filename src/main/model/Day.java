@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Day {
-    private String label;
-    private List<TimeBlock> timeBlocks;
+    private final String label;
+    private final List<TimeBlock> timeBlocks;
 
     // EFFECTS: Sets label of this day to the given label and initialize a list to hold
     // time blocks that will be allocated on this day.

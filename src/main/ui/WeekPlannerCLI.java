@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class WeekPlannerCLI {
-    private List<Day> week;
+    private final List<Day> week;
     private boolean stillRunning;
-    private Scanner userInput;
+    private final Scanner userInput;
 
     // EFFECTS: Instantiate a list to hold the days of the week.
     // Adds the 7 days of the week to that list.
@@ -88,7 +88,6 @@ public class WeekPlannerCLI {
         }
         showTimeBlocksInDay(chosenDay);
         int timeBlockIndex = getIntInRangeFromUser("Enter the number of time block to modify",
-                0,
                 chosenDay.getTimeBlocks().size() - 1);
         TimeBlock timeBlockToModify = chosenDay.getTimeBlocks().get(timeBlockIndex);
         Day targetDay = getDayFromUser("to move to");
@@ -99,6 +98,7 @@ public class WeekPlannerCLI {
                 newTimeBlock.getEndTime());
         if (success) {
             System.out.println("New settings applied successfully.");
+            timeBlockToModify.setLabel(newTimeBlock.getLabel());
         } else {
             System.out.println("Could not apply new settings due to time conflicts");
         }
@@ -118,7 +118,6 @@ public class WeekPlannerCLI {
         showTimeBlocksInDay(chosenDay);
         int timeBlockIndex = getIntInRangeFromUser(
                 "Enter the number of time block to delete",
-                0,
                 chosenDay.getTimeBlocks().size() - 1);
         TimeBlock timeBlockToDelete = chosenDay.getTimeBlocks().get(timeBlockIndex);
         if (chosenDay.deleteTimeBlock(timeBlockToDelete)) {
@@ -134,8 +133,7 @@ public class WeekPlannerCLI {
         System.out.println("0.Mon 1.Tue 2.Wed 3.Thu 4.Fri 5.Sat 6.Sun");
         int choice = getIntInRangeFromUser(
                 "Enter the number of the day " + purpose,
-                0,
-                6);
+                week.size() - 1);
         return week.get(choice);
     }
 
@@ -167,14 +165,14 @@ public class WeekPlannerCLI {
     }
 
     // EFFECTS: Takes an integer from the user and verifies that it falls in range
-    // between start and end inclusive. Keeps asking the user for an input until
+    // between 0 and end inclusive. Keeps asking the user for an input until
     // a valid one is received which is then returned.
-    private int getIntInRangeFromUser(String prompt, int start, int end) {
+    private int getIntInRangeFromUser(String prompt, int end) {
         while (true) {
             System.out.print(prompt + ": ");
             try {
                 int choice = userInput.nextInt();
-                if (choice >= start && choice <= end) {
+                if (choice >= 0 && choice <= end) {
                     return choice;
                 } else {
                     System.out.println("ERROR: you entered an out-of-range integer.");

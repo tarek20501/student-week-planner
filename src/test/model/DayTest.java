@@ -139,8 +139,8 @@ class DayTest {
         LocalTime actualStart = testDay.getTimeBlocks().get(0).getStartTime();
         LocalTime actualEnd = testDay.getTimeBlocks().get(0).getEndTime();
 
-        assertTrue(actualStart.equals(expectedStart));
-        assertTrue(actualEnd.equals(expectedEnd));
+        assertEquals(expectedStart, actualStart);
+        assertEquals(expectedEnd, actualEnd);
     }
 
     @Test
@@ -156,8 +156,8 @@ class DayTest {
         LocalTime actualEnd = testDay.getTimeBlocks().get(0).getEndTime();
         LocalTime expectedStart = LocalTime.of(10,0);
         LocalTime expectedEnd = LocalTime.of(11,0);
-        assertTrue(actualStart.equals(expectedStart));
-        assertTrue(actualEnd.equals(expectedEnd));
+        assertEquals(expectedStart, actualStart);
+        assertEquals(expectedEnd, actualEnd);
     }
 
     @Test
@@ -178,8 +178,8 @@ class DayTest {
         LocalTime actualStart = anotherDay.getTimeBlocks().get(0).getStartTime();
         LocalTime actualEnd = anotherDay.getTimeBlocks().get(0).getEndTime();
 
-        assertTrue(actualStart.equals(expectedStart));
-        assertTrue(actualEnd.equals(expectedEnd));
+        assertEquals(expectedStart, actualStart);
+        assertEquals(expectedEnd, actualEnd);
     }
 
     @Test
@@ -201,8 +201,8 @@ class DayTest {
         LocalTime actualEnd = testDay.getTimeBlocks().get(0).getEndTime();
         LocalTime expectedStart = LocalTime.of(10,0);
         LocalTime expectedEnd = LocalTime.of(11,0);
-        assertTrue(actualStart.equals(expectedStart));
-        assertTrue(actualEnd.equals(expectedEnd));
+        assertEquals(expectedStart, actualStart);
+        assertEquals(expectedEnd, actualEnd);
     }
 
     @Test
