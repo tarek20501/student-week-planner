@@ -24,6 +24,8 @@ I have not found an app that is simple and quick-to-use to plan when I am doing 
 - As a student, I want to see the areas where I did not draw any box in green to visualize my free time.
 - **As a student, I want to delete the any box by selecting the box and pressing delete.**
 - **As a student, I want to modify any box by changing the size of the box or dragging it across the week.**
+- As a student, I want to save my week plan to a file.
+- As a student, I want to load my week plan from a file.
 
 (*) I counted these stories as one for phase 1 since colors have not implemented yet. So what is implemented is users can add time blocks to their weekly planner.
 
