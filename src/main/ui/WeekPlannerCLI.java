@@ -233,6 +233,9 @@ public class WeekPlannerCLI {
         System.out.println("x -> Exit the program");
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads json array from ./data/week.json
+    // verifies that data are valid and assign it to the list of days
     private void loadWeekPlan() {
         String file = "./data/week.json";
         JsonReader jsonReader = new JsonReader(file);

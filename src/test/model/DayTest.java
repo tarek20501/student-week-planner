@@ -210,11 +210,4 @@ class DayTest {
         assertEquals(expectedStart, actualStart);
         assertEquals(expectedEnd, actualEnd);
     }
-
-    @Test
-    public void testTimeBlockLabels() {
-        TimeBlock timeBlock = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
-        timeBlock.setLabel("PersonalProject");
-        assertEquals("PersonalProject", timeBlock.getLabel());
-    }
 }

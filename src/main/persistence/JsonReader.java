@@ -71,8 +71,8 @@ public class JsonReader {
     // EFFECTS: returns a time block from a json object
     private TimeBlock parseTimeBlock(JSONObject jsonObject) {
         String label = jsonObject.getString("label");
-        LocalTime start = LocalTime.parse(jsonObject.getString("startTime"));
-        LocalTime end = LocalTime.parse(jsonObject.getString("endTime"));
+        String  start = jsonObject.getString("startTime");
+        String end = jsonObject.getString("endTime");
 
         TimeBlock timeBlock = new TimeBlock(start, end);
         timeBlock.setLabel(label);
