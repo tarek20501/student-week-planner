@@ -1,0 +1,72 @@
+[
+  {
+    "label" : "Monday",
+    "timeBlocks" : [
+      {
+        "label" : "work",
+        "startTime" : "09:00",
+        "endTime" : "17:00"
+      }
+    ]
+  },
+  {
+    "label" : "Tuesday",
+    "timeBlocks" : [
+      {
+        "label" : "work",
+        "startTime" : "09:00",
+        "endTime" : "17:00"
+      }
+    ]
+  },
+  {
+    "label" : "Wednesday",
+    "timeBlocks" : [
+      {
+        "label" : "work",
+        "startTime" : "09:00",
+        "endTime" : "17:00"
+      }
+    ]
+  },
+  {
+    "label" : "Thursday",
+    "timeBlocks" : [
+      {
+        "label" : "work",
+        "startTime" : "09:00",
+        "endTime" : "17:00"
+      }
+    ]
+  },
+  {
+    "label" : "Friday",
+    "timeBlocks" : [
+      {
+        "label" : "work",
+        "startTime" : "09:00",
+        "endTime" : "17:00"
+      }
+    ]
+  },
+  {
+    "label" : "Saturday",
+    "timeBlocks" : [
+      {
+        "label" : "Hike",
+        "startTime" : "10:00",
+        "endTime" : "18:00"
+      }
+    ]
+  },
+  {
+    "label" : "Sunday",
+    "timeBlocks" : [
+      {
+        "label" : "Bike",
+        "startTime" : "12:00",
+        "endTime" : "15:00"
+      }
+    ]
+  }
+]

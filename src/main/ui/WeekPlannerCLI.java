@@ -2,14 +2,16 @@ package ui;
 
 import model.Day;
 import model.TimeBlock;
+import persistence.JsonReader;
 
+import java.io.IOException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class WeekPlannerCLI {
-    private final List<Day> week;
+    private List<Day> week;
     private boolean stillRunning;
     private final Scanner userInput;
 
@@ -33,30 +35,38 @@ public class WeekPlannerCLI {
         run();
     }
 
-    // EFFECTS: Takes user's commands and calls the function that executes them.
+    // EFFECTS: Takes user's commands and executes them
     private void run() {
         while (stillRunning) {
             System.out.print("Enter the character of what you want to do: ");
             String choice = userInput.next();
-            switch (choice) {
-                case "s":
-                    showTimeBlocksInWeek();
-                    break;
-                case "a":
-                    addTimeBlock();
-                    break;
-                case "m":
-                    modifyTimeBlock();
-                    break;
-                case "d":
-                    deleteTimeBlock();
-                    break;
-                case "x":
-                    stillRunning = false;
-                    break;
-                default:
-                    printHelp();
-            }
+            executeCommand(choice);
+        }
+    }
+
+    // EFFECTS: calls the function that executes the given command.
+    private void executeCommand(String command) {
+        switch (command) {
+            case "w":
+                showTimeBlocksInWeek();
+                break;
+            case "a":
+                addTimeBlock();
+                break;
+            case "m":
+                modifyTimeBlock();
+                break;
+            case "d":
+                deleteTimeBlock();
+                break;
+            case "l":
+                loadWeekPlan();
+                break;
+            case "x":
+                stillRunning = false;
+                break;
+            default:
+                printHelp();
         }
     }
 
@@ -215,10 +225,39 @@ public class WeekPlannerCLI {
 
     // EFFECTS: Prints help message showing available commands and what they do.
     private void printHelp() {
-        System.out.println("s: Show time blocks in your week");
-        System.out.println("a: Add a time block to your week");
-        System.out.println("m: Modify a time block in your week");
-        System.out.println("d: Delete a time block in your week");
-        System.out.println("x: Exit the program");
+        System.out.println("w -> Show time blocks in your week");
+        System.out.println("a -> Add a time block to your week");
+        System.out.println("m -> Modify a time block in your week");
+        System.out.println("d -> Delete a time block in your week");
+        System.out.println("l -> Load week plan");
+        System.out.println("x -> Exit the program");
+    }
+
+    private void loadWeekPlan() {
+        String file = "./data/week.json";
+        JsonReader jsonReader = new JsonReader(file);
+
+        try {
+            List<Day> weekPlan = jsonReader.read();
+
+            if (weekPlan.size() != 7) {
+                System.out.println("ERROR: " + file + " does not have 7 days");
+                return;
+            }
+
+            for (int i = 0; i < 7; i++) {
+                if (!week.get(i).getLabel().equals(weekPlan.get(i).getLabel())) {
+                    System.out.println("Expected: " + week.get(i).getLabel());
+                    System.out.println("Actual: " + weekPlan.get(i).getLabel());
+                    return;
+                }
+            }
+
+            week = weekPlan;
+            System.out.println("Successfully loaded " + file);
+        } catch (IOException e) {
+            System.out.println("ERROR: could not read " + file);
+            e.printStackTrace();
+        }
     }
 }
