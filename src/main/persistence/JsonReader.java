@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -22,8 +21,7 @@ public class JsonReader {
         this.source = source;
     }
 
-    // EFFECTS: reads a day of the week identified by index (0 is Monday and 6 is Sunday)
-    // from file and returns it
+    // EFFECTS: read week plan from a file and returns a list of days
     // throws IOException if an error occurs reading data from file
     public List<Day> read() throws IOException {
         String jsonData = readFile(source);
@@ -38,6 +36,7 @@ public class JsonReader {
         try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
             stream.forEach(contentBuilder::append);
         }
+
 
         return contentBuilder.toString();
     }
