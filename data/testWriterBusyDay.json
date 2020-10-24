@@ -1,0 +1,8 @@
+[{
+    "timeBlocks": [{
+        "startTime": "10:00",
+        "label": "TestBlock",
+        "endTime": "11:00"
+    }],
+    "label": "TestDay"
+}]

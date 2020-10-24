@@ -3,7 +3,9 @@ package ui;
 import model.Day;
 import model.TimeBlock;
 import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -14,12 +16,14 @@ public class WeekPlannerCLI {
     private List<Day> week;
     private boolean stillRunning;
     private final Scanner userInput;
+    private final String persistentData;
 
     // EFFECTS: Instantiate a list to hold the days of the week.
     // Adds the 7 days of the week to that list.
     // Instantiate a scanner to get user input from CLI.
     // Runs the application
     public WeekPlannerCLI() {
+        persistentData = "./data/week.json";
         week = new ArrayList<>();
         week.add(new Day("Monday"));
         week.add(new Day("Tuesday"));
@@ -59,11 +63,26 @@ public class WeekPlannerCLI {
             case "d":
                 deleteTimeBlock();
                 break;
+            case "s":
             case "l":
-                loadWeekPlan();
+                persistenceCommands(command);
                 break;
             case "x":
                 stillRunning = false;
+                break;
+            default:
+                printHelp();
+        }
+    }
+
+    // EFFECTS: calls the function that executes the given persistence related commands.
+    private void persistenceCommands(String command) {
+        switch (command) {
+            case "s":
+                saveWeekPlan();
+                break;
+            case "l":
+                loadWeekPlan();
                 break;
             default:
                 printHelp();
@@ -229,6 +248,7 @@ public class WeekPlannerCLI {
         System.out.println("a -> Add a time block to your week");
         System.out.println("m -> Modify a time block in your week");
         System.out.println("d -> Delete a time block in your week");
+        System.out.println("s -> Save week plan");
         System.out.println("l -> Load week plan");
         System.out.println("x -> Exit the program");
     }
@@ -237,14 +257,13 @@ public class WeekPlannerCLI {
     // EFFECTS: loads json array from ./data/week.json
     // verifies that data are valid and assign it to the list of days
     private void loadWeekPlan() {
-        String file = "./data/week.json";
-        JsonReader jsonReader = new JsonReader(file);
+        JsonReader jsonReader = new JsonReader(persistentData);
 
         try {
             List<Day> weekPlan = jsonReader.read();
 
             if (weekPlan.size() != 7) {
-                System.out.println("ERROR: " + file + " does not have 7 days");
+                System.out.println("ERROR: " + persistentData + " does not have 7 days");
                 return;
             }
 
@@ -257,9 +276,25 @@ public class WeekPlannerCLI {
             }
 
             week = weekPlan;
-            System.out.println("Successfully loaded " + file);
+            System.out.println("Successfully loaded " + persistentData);
         } catch (IOException e) {
-            System.out.println("ERROR: could not read " + file);
+            System.out.println("ERROR: could not read " + persistentData);
+            e.printStackTrace();
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: saves week plan to ./data/week.json
+    private void saveWeekPlan() {
+        JsonWriter writer = new JsonWriter(persistentData);
+
+        try {
+            writer.open();
+            writer.write(week);
+            writer.close();
+            System.out.println("Successfully saved to " + persistentData);
+        } catch (FileNotFoundException e) {
+            System.out.println("ERROR: Could not save to" + persistentData);
             e.printStackTrace();
         }
     }

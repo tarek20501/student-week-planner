@@ -1,10 +1,14 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Day {
+public class Day implements Writable {
     private final String label;
     private final List<TimeBlock> timeBlocks;
 
@@ -94,5 +98,22 @@ public class Day {
             }
         }
         return true;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("label", label);
+        json.put("timeBlocks", timeBlocksToJson());
+        return json;
+    }
+
+    // EFFECTS: returns time blocks in this day as a JSON array
+    private JSONArray timeBlocksToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (TimeBlock timeBlock : timeBlocks) {
+            jsonArray.put(timeBlock.toJson());
+        }
+        return jsonArray;
     }
 }

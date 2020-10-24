@@ -1,8 +1,11 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.time.LocalTime;
 
-public class TimeBlock {
+public class TimeBlock implements Writable {
     private LocalTime startTime;
     private LocalTime endTime;
     private String label;
@@ -90,5 +93,14 @@ public class TimeBlock {
     // EFFECTS: returns a string "HH:MM" representation of time object
     private static String localTimeToString(LocalTime time) {
         return time.toString();
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("label", label);
+        json.put("startTime", getStringStartTime());
+        json.put("endTime", getStringEndTime());
+        return json;
     }
 }
