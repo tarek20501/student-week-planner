@@ -43,7 +43,7 @@ public class WeekPlannerCLI {
     private void run() {
         while (stillRunning) {
             System.out.print("Enter the character of what you want to do: ");
-            String choice = userInput.next();
+            String choice = userInput.nextLine();
             executeCommand(choice);
         }
     }
@@ -171,7 +171,7 @@ public class WeekPlannerCLI {
     // Returns a reference to it.
     private TimeBlock getTimeBlockFromUser(String purpose) {
         System.out.print("Enter the label of the time block to " + purpose + ": ");
-        String label = userInput.next();
+        String label = userInput.nextLine();
         LocalTime startTime = getTimeFromUser("Enter the start time of " + label);
         LocalTime endTime = getTimeFromUser("Enter the end time of " + label);
         TimeBlock timeBlock = new TimeBlock(startTime, endTime);
@@ -184,7 +184,7 @@ public class WeekPlannerCLI {
     private LocalTime getTimeFromUser(String prompt) {
         while (true) {
             System.out.print(prompt + ": ");
-            String timeStr = userInput.next();
+            String timeStr = userInput.nextLine();
             try {
                 return LocalTime.parse(timeStr);
             } catch (Exception e) {
@@ -208,6 +208,7 @@ public class WeekPlannerCLI {
                 }
             } catch (Exception e) {
                 System.out.println("ERROR: you entered a non-integer.");
+            } finally {
                 userInput.nextLine();
             }
         }
