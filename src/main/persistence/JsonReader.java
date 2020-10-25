@@ -16,11 +16,13 @@ import java.util.stream.Stream;
 public class JsonReader {
     private final String source;
 
+    // Adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
     // EFFECTS: constructs reader to read from source file
     public JsonReader(String source) {
         this.source = source;
     }
 
+    // Adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
     // EFFECTS: read week plan from a file and returns a list of days
     // throws IOException if an error occurs reading data from file
     public List<Day> read() throws IOException {
@@ -29,6 +31,7 @@ public class JsonReader {
         return parseDays(jsonArray);
     }
 
+    // Adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
     // EFFECTS: reads source file as string and returns it
     private String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
@@ -41,6 +44,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
+    // Adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
     // EFFECTS: returns list of days from json array
     private List<Day> parseDays(JSONArray jsonArray) {
         List<Day> days = new ArrayList<>();
@@ -53,6 +57,7 @@ public class JsonReader {
         return days;
     }
 
+    // Adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
     // EFFECTS: returns a day from a json object
     private Day parseDay(JSONObject jsonObject) {
         String label = jsonObject.getString("label");
@@ -67,6 +72,7 @@ public class JsonReader {
         return day;
     }
 
+    // Adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
     // EFFECTS: returns a time block from a json object
     private TimeBlock parseTimeBlock(JSONObject jsonObject) {
         String label = jsonObject.getString("label");

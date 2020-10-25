@@ -95,6 +95,7 @@ public class TimeBlock implements Writable {
         return time.toString();
     }
 
+    // Adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

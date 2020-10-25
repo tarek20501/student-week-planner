@@ -100,6 +100,7 @@ public class Day implements Writable {
         return true;
     }
 
+    // Adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -108,6 +109,7 @@ public class Day implements Writable {
         return json;
     }
 
+    // Adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
     // EFFECTS: returns time blocks in this day as a JSON array
     private JSONArray timeBlocksToJson() {
         JSONArray jsonArray = new JSONArray();
