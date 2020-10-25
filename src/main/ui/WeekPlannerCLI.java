@@ -261,27 +261,37 @@ public class WeekPlannerCLI {
         JsonReader jsonReader = new JsonReader(persistentData);
 
         try {
-            List<Day> weekPlan = jsonReader.read();
+            List<Day> loadedWeek = jsonReader.read();
 
-            if (weekPlan.size() != 7) {
-                System.out.println("ERROR: " + persistentData + " does not have 7 days");
+            if (!verifyLoadedData(loadedWeek)) {
                 return;
             }
 
-            for (int i = 0; i < 7; i++) {
-                if (!week.get(i).getLabel().equals(weekPlan.get(i).getLabel())) {
-                    System.out.println("Expected: " + week.get(i).getLabel());
-                    System.out.println("Actual: " + weekPlan.get(i).getLabel());
-                    return;
-                }
-            }
-
-            week = weekPlan;
+            week = loadedWeek;
             System.out.println("Successfully loaded " + persistentData);
         } catch (IOException e) {
             System.out.println("ERROR: could not read " + persistentData);
             e.printStackTrace();
         }
+    }
+
+    // EFFECTS: Checks if loadedWeek list has seven days and the labels of the days are correct
+    // and in the right order (Monday to Sunday)
+    private boolean verifyLoadedData(List<Day> loadedWeek) {
+        if (loadedWeek.size() != 7) {
+            System.out.println("ERROR: " + persistentData + " does not have 7 days");
+            return false;
+        }
+
+        for (int i = 0; i < 7; i++) {
+            if (!week.get(i).getLabel().equals(loadedWeek.get(i).getLabel())) {
+                System.out.println("Expected: " + week.get(i).getLabel());
+                System.out.println("Actual: " + loadedWeek.get(i).getLabel());
+                return false;
+            }
+        }
+
+        return true;
     }
 
     // MODIFIES: this
