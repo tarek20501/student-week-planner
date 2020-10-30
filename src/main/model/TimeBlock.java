@@ -2,9 +2,11 @@ package model;
 
 import org.json.JSONObject;
 import persistence.Writable;
-
+import java.time.format.DateTimeParseException;
 import java.time.LocalTime;
 
+// time block that is defined by a start and end times. It has a label to identify
+// what is happening during the time period it covers.
 public class TimeBlock implements Writable {
     private LocalTime startTime;
     private LocalTime endTime;
@@ -19,10 +21,11 @@ public class TimeBlock implements Writable {
         label = "";
     }
 
-    // REQUIRES: start time is earlier than end time and both be in "HH:MM" format
+    // REQUIRES: start time is earlier than end time
     // EFFECTS: initializes start and end times of this time block to start and end
     // respectively given in String HH:MM. label of this day is initialized to empty string.
-    public TimeBlock(String start, String end) {
+    // throws DateTimeParseException if time is not "HH:MM"
+    public TimeBlock(String start, String end) throws DateTimeParseException {
         this(parseTime(start), parseTime(end));
     }
 
@@ -32,10 +35,10 @@ public class TimeBlock implements Writable {
         this.startTime = startTime;
     }
 
-    // REQUIRES: startTime be "HH:MM" format
     // MODIFIES: this
     // EFFECTS: set start time to given startTime
-    public void setStartTime(String startTime) {
+    // throws DateTimeParseException if time is not "HH:MM"
+    public void setStartTime(String startTime) throws DateTimeParseException {
         setStartTime(parseTime(startTime));
     }
 
@@ -45,10 +48,10 @@ public class TimeBlock implements Writable {
         this.endTime = endTime;
     }
 
-    // REQUIRES: endTime be "HH:MM" format
     // MODIFIES: this
     // EFFECTS: set end time to given endTime
-    public void setEndTime(String endTime) {
+    // throws DateTimeParseException if time is not "HH:MM"
+    public void setEndTime(String endTime) throws DateTimeParseException {
         setEndTime(parseTime(endTime));
     }
 
@@ -83,10 +86,10 @@ public class TimeBlock implements Writable {
         return label;
     }
 
-    // REQUIRES: time be "HH:MM" format
     // EFFECTS: instantiate a LocalTime object from time
     // and returns a reference to it
-    private static LocalTime parseTime(String time) {
+    // throws DateTimeParseException if time is not "HH:MM"
+    private static LocalTime parseTime(String time) throws DateTimeParseException {
         return LocalTime.parse(time);
     }
 

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+// Command Line Interface
 public class WeekPlannerCLI {
     private List<Day> week;
     private boolean stillRunning;

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+// a reader that points to a JSON file from which list of days can be read
 public class JsonReader {
     private final String source;
 

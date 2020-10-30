@@ -55,18 +55,11 @@
         "label": "Saturday"
     },
     {
-        "timeBlocks": [
-            {
-                "startTime": "12:00",
-                "label": "Bike",
-                "endTime": "15:00"
-            },
-            {
-                "startTime": "22:00",
-                "label": "Netflix and Chill",
-                "endTime": "23:00"
-            }
-        ],
+        "timeBlocks": [{
+            "startTime": "12:00",
+            "label": "Bike",
+            "endTime": "15:00"
+        }],
         "label": "Sunday"
     }
 ]

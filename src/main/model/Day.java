@@ -8,6 +8,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+// day that has a label (such as Monday) and a list of time blocks for busy time and tasks.
 public class Day implements Writable {
     private final String label;
     private final List<TimeBlock> timeBlocks;

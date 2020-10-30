@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.List;
 
+// a writer that points to a JSON file to which list of days can be written
 public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
