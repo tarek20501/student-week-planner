@@ -8,9 +8,16 @@ import java.time.LocalTime;
 // time block that is defined by a start and end times. It has a label to identify
 // what is happening during the time period it covers.
 public class TimeBlock implements Writable {
+    public enum Color {
+        RED,
+        YELLOW,
+        UNDEFINED
+    }
+
     private LocalTime startTime;
     private LocalTime endTime;
     private String label;
+    private Color color;
 
     // REQUIRES: start time is earlier than end time
     // EFFECTS: initializes start and end times of this time block to start and end
@@ -19,6 +26,7 @@ public class TimeBlock implements Writable {
         startTime = start;
         endTime = end;
         label = "";
+        color = Color.UNDEFINED;
     }
 
     // REQUIRES: start time is earlier than end time
@@ -27,6 +35,25 @@ public class TimeBlock implements Writable {
     // throws DateTimeParseException if time is not "HH:MM"
     public TimeBlock(String start, String end) throws DateTimeParseException {
         this(parseTime(start), parseTime(end));
+    }
+
+    // REQUIRES: start time is earlier than end time
+    // EFFECTS: initializes start and end times of this time block to start and end
+    // respectively. label of this day is initialized to empty string.
+    // the color of time block is initialized to color
+    public TimeBlock(LocalTime start, LocalTime end, Color color) {
+        this(start, end);
+        this.color = color;
+    }
+
+    // REQUIRES: start time is earlier than end time
+    // EFFECTS: initializes start and end times of this time block to start and end
+    // respectively given in String HH:MM. label of this day is initialized to empty string.
+    // throws DateTimeParseException if time is not "HH:MM"
+    // the color of time block is initialized to color
+    public TimeBlock(String start, String end, Color color) {
+        this(start, end);
+        this.color = color;
     }
 
     // MODIFIES: this
@@ -86,6 +113,11 @@ public class TimeBlock implements Writable {
         return label;
     }
 
+    //EFFECTS: returns the color of this bloc
+    public Color getColor() {
+        return color;
+    }
+
     // EFFECTS: instantiate a LocalTime object from time
     // and returns a reference to it
     // throws DateTimeParseException if time is not "HH:MM"
@@ -105,6 +137,7 @@ public class TimeBlock implements Writable {
         json.put("label", label);
         json.put("startTime", getStringStartTime());
         json.put("endTime", getStringEndTime());
+        json.put("color", color.toString());
         return json;
     }
 }

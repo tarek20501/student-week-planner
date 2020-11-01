@@ -9,9 +9,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class JsonTest {
 
-    protected void checkTimeBlock(String label, String start, String end, TimeBlock timeBlock) {
+    protected void checkTimeBlock(String label, String start, String end, TimeBlock.Color color, TimeBlock timeBlock) {
         assertEquals(label, timeBlock.getLabel());
         assertEquals(LocalTime.parse(start), timeBlock.getStartTime());
         assertEquals(LocalTime.parse(end), timeBlock.getEndTime());
+        assertEquals(color, timeBlock.getColor());
     }
 }

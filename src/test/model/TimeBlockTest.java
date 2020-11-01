@@ -7,23 +7,27 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalTime;
 
 public class TimeBlockTest {
-    private TimeBlock timeBlock;
+    private TimeBlock redTimeBlock;
+    private TimeBlock yellowTimeBlock;
 
     @BeforeEach
     void setupTest() {
-        timeBlock = new TimeBlock("11:00", "12:00");
-        assertEquals("11:00", timeBlock.getStringStartTime());
-        assertEquals("12:00", timeBlock.getStringEndTime());
+        redTimeBlock = new TimeBlock("11:00", "12:00", TimeBlock.Color.RED);
+        yellowTimeBlock = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0), TimeBlock.Color.YELLOW);
+        assertEquals("11:00", redTimeBlock.getStringStartTime());
+        assertEquals("12:00", redTimeBlock.getStringEndTime());
     }
 
     @Test
     void testSettersGetters() {
-        timeBlock.setStartTime("08:00");
-        timeBlock.setEndTime("09:00");
-        timeBlock.setLabel("test");
+        redTimeBlock.setStartTime("08:00");
+        redTimeBlock.setEndTime("09:00");
+        redTimeBlock.setLabel("test");
 
-        assertEquals("08:00", timeBlock.getStringStartTime());
-        assertEquals("09:00", timeBlock.getStringEndTime());
-        assertEquals("test", timeBlock.getLabel());
+        assertEquals("08:00", redTimeBlock.getStringStartTime());
+        assertEquals("09:00", redTimeBlock.getStringEndTime());
+        assertEquals("test", redTimeBlock.getLabel());
+        assertEquals(TimeBlock.Color.RED, redTimeBlock.getColor());
+        assertEquals(TimeBlock.Color.YELLOW, yellowTimeBlock.getColor());
     }
 }

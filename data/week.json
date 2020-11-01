@@ -1,6 +1,7 @@
 [
     {
         "timeBlocks": [{
+            "color": "RED",
             "startTime": "09:00",
             "label": "work",
             "endTime": "17:00"
@@ -9,6 +10,7 @@
     },
     {
         "timeBlocks": [{
+            "color": "RED",
             "startTime": "09:00",
             "label": "work",
             "endTime": "17:00"
@@ -17,6 +19,7 @@
     },
     {
         "timeBlocks": [{
+            "color": "RED",
             "startTime": "09:00",
             "label": "work",
             "endTime": "17:00"
@@ -25,6 +28,7 @@
     },
     {
         "timeBlocks": [{
+            "color": "RED",
             "startTime": "09:00",
             "label": "work",
             "endTime": "17:00"
@@ -33,6 +37,7 @@
     },
     {
         "timeBlocks": [{
+            "color": "RED",
             "startTime": "09:00",
             "label": "work",
             "endTime": "17:00"
@@ -42,11 +47,13 @@
     {
         "timeBlocks": [
             {
+                "color": "YELLOW",
                 "startTime": "10:00",
                 "label": "Hike",
                 "endTime": "18:00"
             },
             {
+                "color": "YELLOW",
                 "startTime": "22:00",
                 "label": "Netflix",
                 "endTime": "23:00"
@@ -56,6 +63,7 @@
     },
     {
         "timeBlocks": [{
+            "color": "YELLOW",
             "startTime": "12:00",
             "label": "Bike",
             "endTime": "15:00"

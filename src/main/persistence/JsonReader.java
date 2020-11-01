@@ -41,7 +41,6 @@ public class JsonReader {
             stream.forEach(contentBuilder::append);
         }
 
-
         return contentBuilder.toString();
     }
 
@@ -79,8 +78,9 @@ public class JsonReader {
         String label = jsonObject.getString("label");
         String  start = jsonObject.getString("startTime");
         String end = jsonObject.getString("endTime");
+        String color = jsonObject.getString("color");
 
-        TimeBlock timeBlock = new TimeBlock(start, end);
+        TimeBlock timeBlock = new TimeBlock(start, end, TimeBlock.Color.valueOf(color));
         timeBlock.setLabel(label);
 
         return timeBlock;

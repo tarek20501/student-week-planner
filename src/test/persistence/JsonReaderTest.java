@@ -45,8 +45,8 @@ public class JsonReaderTest extends JsonTest{
             assertEquals("TestBusyDay", day.getLabel());
             List<TimeBlock> timeBlocks = day.getTimeBlocks();
             assertEquals(2, timeBlocks.size());
-            checkTimeBlock("work", "09:00", "17:00", timeBlocks.get(0));
-            checkTimeBlock("dinner", "17:00", "18:00", timeBlocks.get(1));
+            checkTimeBlock("work", "09:00", "17:00", TimeBlock.Color.RED, timeBlocks.get(0));
+            checkTimeBlock("dinner", "17:00", "18:00", TimeBlock.Color.YELLOW, timeBlocks.get(1));
         } catch (IOException e) {
             fail("Couldn't read from file");
         }

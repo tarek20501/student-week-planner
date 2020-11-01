@@ -53,7 +53,7 @@ public class JsonWriterTest extends JsonTest{
     void testWriterBusyDay() {
         try {
             Day testDay = testWeek.get(0);
-            TimeBlock testBlock = new TimeBlock("10:00", "11:00");
+            TimeBlock testBlock = new TimeBlock("10:00", "11:00", TimeBlock.Color.RED);
             testBlock.setLabel("TestBlock");
             testDay.addTimeBlock(testBlock);
 
@@ -67,7 +67,7 @@ public class JsonWriterTest extends JsonTest{
             assertEquals("TestDay", testWeek.get(0).getLabel());
             List<TimeBlock> timeBlocks = testWeek.get(0).getTimeBlocks();
             assertEquals(1, timeBlocks.size());
-            checkTimeBlock("TestBlock", "10:00", "11:00", timeBlocks.get(0));
+            checkTimeBlock("TestBlock", "10:00", "11:00", TimeBlock.Color.RED, timeBlocks.get(0));
         } catch (IOException e) {
             fail("Exception should not have been thrown");
         }
