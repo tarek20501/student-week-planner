@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class WeekPlannerFrame extends JFrame {
-    public static int COLUMN_WIDTH = 100;
+    public static int COLUMN_WIDTH = 150;
     public static int COLUMN_HEIGHT = 800;
     public static int NUMBER_OF_ROWS = 16;
     public static int START_HOUR = 9;
