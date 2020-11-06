@@ -5,6 +5,7 @@ import model.TimeBlock;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,14 +22,14 @@ public class DayPanel extends JPanel {
         this.setBackground(NEPHRITIS);
         this.setLayout(null);
         this.setPreferredSize(new Dimension(COLUMN_WIDTH, COLUMN_HEIGHT));
-        // Initialize Fields
+        // Initialize Fields and add them to the panel
         this.day = day;
-        dayLabel = new JLabel(day.getLabel());
         timeBlockLabels = new ArrayList<>();
+        initializeTimeBlockLabels();
         gridPanel = new GridPanel();
-        for (TimeBlock timeBlock : day.getTimeBlocks()) {
-            timeBlockLabels.add(new TimeBlockLabel(timeBlock));
-        }
+        this.add(gridPanel);
+        dayLabel = new JLabel(day.getLabel());
+        this.add(dayLabel);
     }
 
     public void paint(Graphics g) {
@@ -42,18 +43,35 @@ public class DayPanel extends JPanel {
         return day;
     }
 
+    public void addTimeBlockLabel(LocalTime start, LocalTime end) {
+        TimeBlock timeBlock = new TimeBlock(start, end);
+        if (day.addTimeBlock(timeBlock)) {
+            TimeBlockLabel timeBlockLabel = new TimeBlockLabel(timeBlock);
+            timeBlockLabels.add(timeBlockLabel);
+            this.add(timeBlockLabel,0);
+            this.repaint();
+        }
+    }
+
+    private void initializeTimeBlockLabels() {
+        for (TimeBlock timeBlock : day.getTimeBlocks()) {
+            timeBlockLabels.add(new TimeBlockLabel(timeBlock));
+        }
+        for (TimeBlockLabel timeBlockLabel : timeBlockLabels) {
+            this.add(timeBlockLabel);
+        }
+    }
+
     private void drawDayLabel() {
         dayLabel.setBackground(MIDNIGHT_BLUE);
         dayLabel.setForeground(Color.WHITE);
         dayLabel.setOpaque(true);
         dayLabel.setHorizontalAlignment(SwingConstants.CENTER);
         dayLabel.setBounds(0, 0, this.getWidth(), getCellHeight(this));
-        this.add(dayLabel);
     }
 
     private void drawGrid() {
         gridPanel.setBounds(0,0,this.getWidth(), this.getHeight());
-        this.add(gridPanel);
     }
 
     private void drawTimeBlocks() {
@@ -64,7 +82,6 @@ public class DayPanel extends JPanel {
                     startPixel,
                     this.getWidth(),
                     endPixel - startPixel);
-            this.add(timeBlockLabel);
         }
     }
 

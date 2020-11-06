@@ -18,6 +18,10 @@ import static ui.WeekPlannerFrame.*;
 
 public class WeekPanel extends JPanel implements MouseListener {
     private List<DayPanel> dayPanels;
+    private volatile LocalTime pressTime;
+    private volatile LocalTime releaseTime;
+    private volatile DayPanel pressDay;
+    private volatile DayPanel releaseDay;
 
     public WeekPanel() {
         this.addMouseListener(this);
@@ -31,11 +35,15 @@ public class WeekPanel extends JPanel implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        System.out.println("Day: " + pixel2Day(e.getX()).getLabel() + " Time: " + pixel2Time(e.getY()).toString());
+        pressDay = pixel2Day(e.getX());
+        pressTime = pixel2Time(e.getY());
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        releaseDay = pixel2Day(e.getX());
+        releaseTime = pixel2Time(e.getY());
+        handleMouseCommands();
     }
 
     @Override
@@ -44,6 +52,19 @@ public class WeekPanel extends JPanel implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
+    }
+
+    private void handleMouseCommands() {
+        if (pressDay == releaseDay) {
+            if (pressTime.isBefore(releaseTime)) {
+                pressDay.addTimeBlockLabel(pressTime, releaseTime);
+            } else if (pressTime.isAfter(releaseTime)) {
+                pressDay.addTimeBlockLabel(releaseTime, pressTime);
+            }
+//            else if (pressTime.equals(releaseTime)) {
+//                // if a time block is hit then edit label (left click) delete (right click)
+//            }
+        }
     }
 
     // MODIFIES: this
@@ -100,13 +121,13 @@ public class WeekPanel extends JPanel implements MouseListener {
 
     private LocalTime pixel2Time(int y) {
         int cellHeight = getCellHeight(this);
-        int hour = y / cellHeight + (START_HOUR - 1);
+        int hour = (y / cellHeight + (START_HOUR - 1)) % 24;
         int minute = (int)(((float)(y % cellHeight) / (float)cellHeight) * 59);
         return LocalTime.of(hour, minute);
     }
 
-    private Day pixel2Day(int x) {
-        return dayPanels.get(x / calculateColumnWidth()).getDay();
+    private DayPanel pixel2Day(int x) {
+        return dayPanels.get(x / calculateColumnWidth());
     }
 
     private int calculateColumnWidth() {
