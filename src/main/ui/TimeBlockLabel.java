@@ -15,19 +15,24 @@ public class TimeBlockLabel extends JLabel {
         this.timeBlock = timeBlock;
         this.setText(timeBlock.getLabel());
         this.setHorizontalAlignment(SwingConstants.CENTER);
-        Color color;
 
+        Color background;
+        Color border;
         switch (timeBlock.getColor()) {
             case RED:
-                color = Color.RED;
+                background = POMEGRANATE;
+                border = ALIZARIN;
                 break;
             case YELLOW:
-                color = Color.YELLOW;
+                background = ORANGE;
+                border = SUN_FLOWER;
                 break;
             default:
-                color = Color.GRAY;
+                background = Color.GRAY;
+                border = Color.BLACK;
         }
-        this.setBackground(color);
+        this.setBackground(background);
+        this.setBorder(BorderFactory.createMatteBorder(10,1, 10, 0, border));
         this.setOpaque(true);
     }
 

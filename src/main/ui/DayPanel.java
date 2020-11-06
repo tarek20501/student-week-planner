@@ -18,7 +18,7 @@ public class DayPanel extends JPanel {
 
     public DayPanel(Day day) {
         // Setup this panel
-        this.setBackground(Color.green);
+        this.setBackground(NEPHRITIS);
         this.setLayout(null);
         this.setPreferredSize(new Dimension(COLUMN_WIDTH, COLUMN_HEIGHT));
         // Initialize Fields
@@ -38,8 +38,13 @@ public class DayPanel extends JPanel {
         super.paint(g);
     }
 
+    public Day getDay() {
+        return day;
+    }
+
     private void drawDayLabel() {
-        dayLabel.setBackground(Color.WHITE);
+        dayLabel.setBackground(MIDNIGHT_BLUE);
+        dayLabel.setForeground(Color.WHITE);
         dayLabel.setOpaque(true);
         dayLabel.setHorizontalAlignment(SwingConstants.CENTER);
         dayLabel.setBounds(0, 0, this.getWidth(), getCellHeight(this));
@@ -76,11 +81,14 @@ public class DayPanel extends JPanel {
         }
 
         private void drawGrid(Graphics2D g2d) {
+            g2d.setColor(EMERALD);
             for (int i = 1; i < NUMBER_OF_ROWS; i++) {
                 int y = getCellHeight(this) * i;
                 g2d.drawLine(0, y, this.getWidth(), y);
             }
             g2d.drawLine(0,0, 0, this.getHeight());
+            g2d.setColor(WET_ASPHALT);
+            g2d.drawLine(0,0, 0, getCellHeight(this));
         }
     }
 }
