@@ -132,9 +132,7 @@ public class WeekPanel extends JPanel implements MouseListener {
     }
 
     private void loadDayPanels(List<Day> week) {
-        for (DayPanel dayPanel : dayPanels) {
-            this.remove(dayPanel);
-        }
+        this.removeAll();
         this.dayPanels = new ArrayList<>();
         for (Day day : week) {
             this.dayPanels.add(new DayPanel(day));
@@ -142,6 +140,7 @@ public class WeekPanel extends JPanel implements MouseListener {
         for (DayPanel dayPanel : dayPanels) {
             this.add(dayPanel);
         }
+        this.repaint();
         this.revalidate();
     }
 }
