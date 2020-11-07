@@ -44,6 +44,10 @@ public class TimeBlockLabel extends JLabel {
         return time2pixel(timeBlock.getEndTime(), cellHeight);
     }
 
+    public TimeBlock getTimeBlock() {
+        return timeBlock;
+    }
+
     private int time2pixel(LocalTime time, int cellHeight) {
         int hour = time.getHour();
         int minute = time.getMinute();

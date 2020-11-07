@@ -22,10 +22,12 @@ public class WeekPanel extends JPanel implements MouseListener {
     private volatile LocalTime releaseTime;
     private volatile DayPanel pressDay;
     private volatile DayPanel releaseDay;
+    private volatile int mouseButton;
 
     public WeekPanel() {
         this.addMouseListener(this);
         this.setLayout(new GridLayout(1,0));
+        this.setBackground(MIDNIGHT_BLUE);
         initializeDayPanels();
     }
 
@@ -37,6 +39,7 @@ public class WeekPanel extends JPanel implements MouseListener {
     public void mousePressed(MouseEvent e) {
         pressDay = pixel2Day(e.getX());
         pressTime = pixel2Time(e.getY());
+        mouseButton = e.getButton();
     }
 
     @Override
@@ -60,10 +63,19 @@ public class WeekPanel extends JPanel implements MouseListener {
                 pressDay.addTimeBlockLabel(pressTime, releaseTime);
             } else if (pressTime.isAfter(releaseTime)) {
                 pressDay.addTimeBlockLabel(releaseTime, pressTime);
+            } else if (pressTime.equals(releaseTime)) {
+                TimeBlockLabel timeBlockLabel = pressDay.isThereTimeBlock(pressTime);
+                if (timeBlockLabel != null) {
+                    switch (mouseButton) {
+                        case MouseEvent.BUTTON1:
+                            // edit label
+                            break;
+                        case MouseEvent.BUTTON3:
+                            pressDay.deleteTimeBlockLabel(timeBlockLabel);
+                            break;
+                    }
+                }
             }
-//            else if (pressTime.equals(releaseTime)) {
-//                // if a time block is hit then edit label (left click) delete (right click)
-//            }
         }
     }
 

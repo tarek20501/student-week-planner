@@ -53,6 +53,24 @@ public class DayPanel extends JPanel {
         }
     }
 
+    public void deleteTimeBlockLabel(TimeBlockLabel timeBlockLabel) {
+        this.remove(timeBlockLabel);
+        day.deleteTimeBlock(timeBlockLabel.getTimeBlock());
+        timeBlockLabels.remove(timeBlockLabel);
+        this.repaint();
+    }
+
+    public TimeBlockLabel isThereTimeBlock(LocalTime time) {
+        for (TimeBlockLabel timeBlockLabel : timeBlockLabels) {
+            LocalTime startTime = timeBlockLabel.getTimeBlock().getStartTime();
+            LocalTime endTime = timeBlockLabel.getTimeBlock().getEndTime();
+            if (time.isAfter(startTime) && time.isBefore(endTime)) {
+                return timeBlockLabel;
+            }
+        }
+        return null;
+    }
+
     private void initializeTimeBlockLabels() {
         for (TimeBlock timeBlock : day.getTimeBlocks()) {
             timeBlockLabels.add(new TimeBlockLabel(timeBlock));
