@@ -48,6 +48,16 @@ public class TimeBlockLabel extends JLabel {
         return timeBlock;
     }
 
+    public void setLabel(String label) {
+        timeBlock.setLabel(label);
+        this.setText(label);
+        this.repaint();
+    }
+
+    public String getLabel() {
+        return timeBlock.getLabel();
+    }
+
     private int time2pixel(LocalTime time, int cellHeight) {
         int hour = time.getHour();
         int minute = time.getMinute();

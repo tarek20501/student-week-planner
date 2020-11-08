@@ -38,14 +38,14 @@ public class WeekPanel extends JPanel implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         pressDay = pixel2Day(e.getX());
-        pressTime = pixel2Time(e.getY());
+        pressTime = pixel2Time(trimY(e.getY()));
         mouseButton = e.getButton();
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         releaseDay = pixel2Day(e.getX());
-        releaseTime = pixel2Time(e.getY());
+        releaseTime = pixel2Time(trimY(e.getY()));
         handleMouseCommands();
     }
 
@@ -55,6 +55,18 @@ public class WeekPanel extends JPanel implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
+    }
+
+    private int trimY(int pixelY) {
+        int lowerLimit = getCellHeight(this);
+        int upperLimit = getCellHeight(this) * NUMBER_OF_ROWS - 1;
+        if (pixelY < lowerLimit) {
+            return lowerLimit;
+        } else if (pixelY > upperLimit) {
+            return upperLimit;
+        } else {
+            return pixelY;
+        }
     }
 
     private void handleMouseCommands() {
@@ -68,7 +80,8 @@ public class WeekPanel extends JPanel implements MouseListener {
                 if (timeBlockLabel != null) {
                     switch (mouseButton) {
                         case MouseEvent.BUTTON1:
-                            // edit label
+                            String label = JOptionPane.showInputDialog("Enter label: ", timeBlockLabel.getLabel());
+                            timeBlockLabel.setLabel(label);
                             break;
                         case MouseEvent.BUTTON3:
                             pressDay.deleteTimeBlockLabel(timeBlockLabel);
