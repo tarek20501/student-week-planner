@@ -1,6 +1,7 @@
 package ui;
 
 import model.Day;
+import model.TimeBlock;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -23,11 +24,13 @@ public class WeekPanel extends JPanel implements MouseListener {
     private volatile DayPanel pressDay;
     private volatile DayPanel releaseDay;
     private volatile int mouseButton;
+    private TimeBlock.Color timeBlockColor;
 
     public WeekPanel() {
         this.addMouseListener(this);
         this.setLayout(new GridLayout(1,0));
         this.setBackground(MIDNIGHT_BLUE);
+        timeBlockColor = TimeBlock.Color.RED;
         initializeDayPanels();
     }
 
@@ -57,6 +60,10 @@ public class WeekPanel extends JPanel implements MouseListener {
     public void mouseExited(MouseEvent e) {
     }
 
+    public void setTimeBlockColor(TimeBlock.Color color) {
+        timeBlockColor = color;
+    }
+
     private int trimY(int pixelY) {
         int lowerLimit = getCellHeight(this);
         int upperLimit = getCellHeight(this) * NUMBER_OF_ROWS - 1;
@@ -72,9 +79,9 @@ public class WeekPanel extends JPanel implements MouseListener {
     private void handleMouseCommands() {
         if (pressDay == releaseDay) {
             if (pressTime.isBefore(releaseTime)) {
-                pressDay.addTimeBlockLabel(pressTime, releaseTime);
+                pressDay.addTimeBlockLabel(pressTime, releaseTime, timeBlockColor);
             } else if (pressTime.isAfter(releaseTime)) {
-                pressDay.addTimeBlockLabel(releaseTime, pressTime);
+                pressDay.addTimeBlockLabel(releaseTime, pressTime, timeBlockColor);
             } else if (pressTime.equals(releaseTime)) {
                 TimeBlockLabel timeBlockLabel = pressDay.isThereTimeBlock(pressTime);
                 if (timeBlockLabel != null) {
@@ -84,7 +91,10 @@ public class WeekPanel extends JPanel implements MouseListener {
                             timeBlockLabel.setLabel(label);
                             break;
                         case MouseEvent.BUTTON3:
-                            pressDay.deleteTimeBlockLabel(timeBlockLabel);
+                            int response = JOptionPane.showConfirmDialog(null,"Do you want to delete?");
+                            if (response == 0) {
+                                pressDay.deleteTimeBlockLabel(timeBlockLabel);
+                            }
                             break;
                     }
                 }

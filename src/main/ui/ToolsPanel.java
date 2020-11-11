@@ -1,5 +1,7 @@
 package ui;
 
+import model.TimeBlock;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,6 +15,8 @@ public class ToolsPanel extends JPanel implements ActionListener {
     private final JButton open;
     private final JButton save;
     private final JFileChooser fileChooser;
+    private final JRadioButton red;
+    private final JRadioButton yellow;
 
     public ToolsPanel(WeekPanel weekPanel) {
         this.setLayout(new FlowLayout());
@@ -32,6 +36,17 @@ public class ToolsPanel extends JPanel implements ActionListener {
 
         fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File("./data/"));
+
+        red = new JRadioButton("Red", true);
+        yellow = new JRadioButton("Yellow");
+        red.addActionListener(this);
+        yellow.addActionListener(this);
+        this.add(red);
+        this.add(yellow);
+
+        ButtonGroup group = new ButtonGroup();
+        group.add(red);
+        group.add(yellow);
     }
 
     @Override
@@ -46,6 +61,10 @@ public class ToolsPanel extends JPanel implements ActionListener {
             if (response == JFileChooser.APPROVE_OPTION) {
                 weekPanel.saveWeekPlan(fileChooser.getSelectedFile().getAbsolutePath());
             }
+        } else if (e.getSource() == red) {
+            weekPanel.setTimeBlockColor(TimeBlock.Color.RED);
+        } else if (e.getSource() == yellow) {
+            weekPanel.setTimeBlockColor(TimeBlock.Color.YELLOW);
         }
     }
 }

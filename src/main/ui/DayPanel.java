@@ -43,8 +43,8 @@ public class DayPanel extends JPanel {
         return day;
     }
 
-    public void addTimeBlockLabel(LocalTime start, LocalTime end) {
-        TimeBlock timeBlock = new TimeBlock(start, end);
+    public void addTimeBlockLabel(LocalTime start, LocalTime end, TimeBlock.Color color) {
+        TimeBlock timeBlock = new TimeBlock(start, end, color);
         if (day.addTimeBlock(timeBlock)) {
             TimeBlockLabel timeBlockLabel = new TimeBlockLabel(timeBlock);
             timeBlockLabels.add(timeBlockLabel);
