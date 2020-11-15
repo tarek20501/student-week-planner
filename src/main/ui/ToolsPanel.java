@@ -10,6 +10,7 @@ import java.io.File;
 
 import static ui.WeekPlannerFrame.*;
 
+// tools panel containing open and save buttons in addition to red and yellow radio buttons
 public class ToolsPanel extends JPanel implements ActionListener {
     WeekPanel weekPanel;
     private final JButton open;
@@ -18,6 +19,9 @@ public class ToolsPanel extends JPanel implements ActionListener {
     private final JRadioButton red;
     private final JRadioButton yellow;
 
+    // EFFECTS: setup this panel with flow layout
+    //          Add open and save buttons
+    //          Add red and yellow radio buttons
     public ToolsPanel(WeekPanel weekPanel) {
         this.setLayout(new FlowLayout());
         this.setPreferredSize(new Dimension(7 * COLUMN_WIDTH, 35));
@@ -49,6 +53,8 @@ public class ToolsPanel extends JPanel implements ActionListener {
         group.add(yellow);
     }
 
+    // EFFECTS: Handle open and save buttons
+    //          Handle red and yellow radio buttons
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == open) {

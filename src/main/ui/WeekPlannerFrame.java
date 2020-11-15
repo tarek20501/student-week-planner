@@ -3,6 +3,7 @@ package ui;
 import javax.swing.*;
 import java.awt.*;
 
+// initialize all gui components and add them to the window
 public class WeekPlannerFrame extends JFrame {
     public static int COLUMN_WIDTH = 150;
     public static int COLUMN_HEIGHT = 800;
@@ -18,7 +19,10 @@ public class WeekPlannerFrame extends JFrame {
     public static Color ORANGE = new Color(0xf39c12);
     public static Color SUN_FLOWER = new Color(0xf1c40f);
 
-
+    // EFFECTS: setup this frame with border layout
+    //          instantiate week panel snd put it in center
+    //          instantiate time panel and put it in the west
+    //          instantiate tools panel and out it in the north
     public WeekPlannerFrame() {
         this.setTitle("Week Planner");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -34,12 +38,16 @@ public class WeekPlannerFrame extends JFrame {
         this.setVisible(true);
     }
 
+    // REQUIRES: panel has height equal to week panel's height
+    // EFFECTS: returns the height of a cell in the calendar
     public static int getCellHeight(JPanel panel) {
         return panel.getHeight() / NUMBER_OF_ROWS;
     }
 
+    // a vertical panel with hours starting from 9:00 till 23:00
     private static class TimePanel extends JPanel {
 
+        // EFFECTS: setup the panel with NULL layout
         public TimePanel() {
             this.setLayout(null);
             this.setPreferredSize(new Dimension(35, COLUMN_HEIGHT));
@@ -47,6 +55,8 @@ public class WeekPlannerFrame extends JFrame {
             this.setOpaque(true);
         }
 
+        // EFFECTS: draw hours vertically starting from 9:00 on top until 23:00 on the bottom
+        @Override
         public void paint(Graphics g) {
             super.paint(g);
             Graphics2D g2d = (Graphics2D)g;

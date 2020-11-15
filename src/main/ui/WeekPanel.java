@@ -17,6 +17,7 @@ import java.util.List;
 
 import static ui.WeekPlannerFrame.*;
 
+// week panel connects day panels (columns) in a row forming a calendar
 public class WeekPanel extends JPanel implements MouseListener {
     private List<DayPanel> dayPanels;
     private volatile LocalTime pressTime;
@@ -26,6 +27,7 @@ public class WeekPanel extends JPanel implements MouseListener {
     private volatile int mouseButton;
     private TimeBlock.Color timeBlockColor;
 
+    // EFFECTS: setup this panel with grid layout
     public WeekPanel() {
         this.addMouseListener(this);
         this.setLayout(new GridLayout(1,0));
@@ -34,10 +36,14 @@ public class WeekPanel extends JPanel implements MouseListener {
         initializeDayPanels();
     }
 
+    // NOT USED
     @Override
     public void mouseClicked(MouseEvent e) {
     }
 
+    // MODIFIES: this
+    // EFFECTS: get mouse coordinates and map them to day and time
+    //          Get the pressed button and cash all the this data
     @Override
     public void mousePressed(MouseEvent e) {
         pressDay = pixel2Day(e.getX());
@@ -45,6 +51,9 @@ public class WeekPanel extends JPanel implements MouseListener {
         mouseButton = e.getButton();
     }
 
+    // MODIFIES: this
+    // EFFECTS: get mouse coordinates and map them to day and time
+    //          cash the data and call the function that handles mouse commands
     @Override
     public void mouseReleased(MouseEvent e) {
         releaseDay = pixel2Day(e.getX());
@@ -52,10 +61,12 @@ public class WeekPanel extends JPanel implements MouseListener {
         handleMouseCommands();
     }
 
+    // NOT USED
     @Override
     public void mouseEntered(MouseEvent e) {
     }
 
+    // NOT USED
     @Override
     public void mouseExited(MouseEvent e) {
     }
@@ -64,6 +75,7 @@ public class WeekPanel extends JPanel implements MouseListener {
         timeBlockColor = color;
     }
 
+    // EFFECTS: trim pixelY such that it stays between 9:00 and 23:59
     private int trimY(int pixelY) {
         int lowerLimit = getCellHeight(this);
         int upperLimit = getCellHeight(this) * NUMBER_OF_ROWS - 1;
@@ -76,6 +88,8 @@ public class WeekPanel extends JPanel implements MouseListener {
         }
     }
 
+    // EFFECTS: based on pressTime, releaseTime, pressDay, releaseDay, mouseButton and timeBlockColor,
+    //          call the appropriate function from the backend.
     private void handleMouseCommands() {
         if (pressDay == releaseDay) {
             if (pressTime.isBefore(releaseTime)) {
@@ -103,7 +117,7 @@ public class WeekPanel extends JPanel implements MouseListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads json array from file
+    // EFFECTS: loads json array from file the user chooses
     // verifies that data are valid and assign it to the list of days
     public void loadWeekPlan(String file) {
         JsonReader jsonReader = new JsonReader(file);
@@ -121,7 +135,7 @@ public class WeekPanel extends JPanel implements MouseListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: saves week plan to ./data/week.json
+    // EFFECTS: saves week plan to a file the user can choose
     public void saveWeekPlan(String file) {
         JsonWriter writer = new JsonWriter(file);
 
@@ -154,6 +168,7 @@ public class WeekPanel extends JPanel implements MouseListener {
         return true;
     }
 
+    // EFFECTS: convert y coordinate in pixels to time
     private LocalTime pixel2Time(int y) {
         int cellHeight = getCellHeight(this);
         int hour = (y / cellHeight + (START_HOUR - 1)) % 24;
@@ -161,14 +176,17 @@ public class WeekPanel extends JPanel implements MouseListener {
         return LocalTime.of(hour, minute);
     }
 
+    // EFFECTS: convert x coordinate in pixels to day
     private DayPanel pixel2Day(int x) {
         return dayPanels.get(x / calculateColumnWidth());
     }
 
+    // EFFECTS: calculates and returns the width of a column (day panel)
     private int calculateColumnWidth() {
         return this.getWidth() / 7;
     }
 
+    // EFFECTS: initialize the week panel with empty day panels
     private void initializeDayPanels() {
         this.dayPanels = new ArrayList<>();
         List<Day> week = new ArrayList<>();
@@ -187,6 +205,7 @@ public class WeekPanel extends JPanel implements MouseListener {
         }
     }
 
+    // EFFECTS: replace current day panels with new ones created from days in given week
     private void loadDayPanels(List<Day> week) {
         this.removeAll();
         this.dayPanels = new ArrayList<>();
