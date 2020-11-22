@@ -1,5 +1,6 @@
 package persistence;
 
+import exception.InvalidTimeBlockException;
 import model.Day;
 import model.TimeBlock;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +13,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class JsonWriterTest extends JsonTest{
+public class JsonWriterTest extends JsonTest {
     private List<Day> testWeek;
 
     @BeforeEach
@@ -44,7 +45,7 @@ public class JsonWriterTest extends JsonTest{
             testWeek = reader.read();
             assertEquals("TestDay", testWeek.get(0).getLabel());
             assertEquals(0, testWeek.get(0).getTimeBlocks().size());
-        } catch (IOException e) {
+        } catch (Exception e) {
             fail("Exception should not have been thrown");
         }
     }
@@ -53,8 +54,14 @@ public class JsonWriterTest extends JsonTest{
     void testWriterBusyDay() {
         try {
             Day testDay = testWeek.get(0);
-            TimeBlock testBlock = new TimeBlock("10:00", "11:00", TimeBlock.Color.RED);
-            testBlock.setLabel("TestBlock");
+            TimeBlock testBlock = null;
+            try {
+                testBlock = new TimeBlock("10:00", "11:00", TimeBlock.Color.RED);
+                testBlock.setLabel("TestBlock");
+            } catch (InvalidTimeBlockException e) {
+                fail("Did not expect an exception");
+            }
+
             testDay.addTimeBlock(testBlock);
 
             JsonWriter writer = new JsonWriter("./data/testWriterBusyDay.json");
@@ -68,7 +75,7 @@ public class JsonWriterTest extends JsonTest{
             List<TimeBlock> timeBlocks = testWeek.get(0).getTimeBlocks();
             assertEquals(1, timeBlocks.size());
             checkTimeBlock("TestBlock", "10:00", "11:00", TimeBlock.Color.RED, timeBlocks.get(0));
-        } catch (IOException e) {
+        } catch (Exception e) {
             fail("Exception should not have been thrown");
         }
     }

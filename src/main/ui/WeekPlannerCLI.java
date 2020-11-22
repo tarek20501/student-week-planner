@@ -1,5 +1,6 @@
 package ui;
 
+import exception.InvalidTimeBlockException;
 import model.Day;
 import model.TimeBlock;
 import persistence.JsonReader;
@@ -171,13 +172,19 @@ public class WeekPlannerCLI {
     // Instantiates a time block object with the attributes defined by the user.
     // Returns a reference to it.
     private TimeBlock getTimeBlockFromUser(String purpose) {
-        System.out.print("Enter the label of the time block to " + purpose + ": ");
-        String label = userInput.nextLine();
-        LocalTime startTime = getTimeFromUser("Enter the start time of " + label);
-        LocalTime endTime = getTimeFromUser("Enter the end time of " + label);
-        TimeBlock timeBlock = new TimeBlock(startTime, endTime);
-        timeBlock.setLabel(label);
-        return timeBlock;
+        while (true) {
+            System.out.print("Enter the label of the time block to " + purpose + ": ");
+            String label = userInput.nextLine();
+            LocalTime startTime = getTimeFromUser("Enter the start time of " + label);
+            LocalTime endTime = getTimeFromUser("Enter the end time of " + label);
+            try {
+                TimeBlock timeBlock = new TimeBlock(startTime, endTime);
+                timeBlock.setLabel(label);
+                return timeBlock;
+            } catch (InvalidTimeBlockException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     // EFFECTS: Lets the user enter time as a string "HH:MM".
@@ -273,6 +280,8 @@ public class WeekPlannerCLI {
         } catch (IOException e) {
             System.out.println("ERROR: could not read " + persistentData);
             e.printStackTrace();
+        } catch (InvalidTimeBlockException e) {
+            System.out.println(e.getMessage());
         }
     }
 

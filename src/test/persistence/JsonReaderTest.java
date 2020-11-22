@@ -1,5 +1,6 @@
 package persistence;
 
+import exception.InvalidTimeBlockException;
 import model.Day;
 import model.TimeBlock;
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class JsonReaderTest extends JsonTest{
+public class JsonReaderTest extends JsonTest {
 
     @Test
     void testReaderNonExistentFile() {
@@ -20,6 +21,8 @@ public class JsonReaderTest extends JsonTest{
             fail("IOException expected");
         } catch (IOException e) {
             // pass
+        } catch (InvalidTimeBlockException e) {
+            fail("Did not expect InvalidTimeBlockException");
         }
     }
 
@@ -33,6 +36,8 @@ public class JsonReaderTest extends JsonTest{
             assertEquals(0, day.getTimeBlocks().size());
         } catch (IOException e) {
             fail("Couldn't read from file");
+        } catch (InvalidTimeBlockException e) {
+            fail("Did not expect InvalidTimeBlockException");
         }
     }
 
@@ -49,6 +54,21 @@ public class JsonReaderTest extends JsonTest{
             checkTimeBlock("dinner", "17:00", "18:00", TimeBlock.Color.YELLOW, timeBlocks.get(1));
         } catch (IOException e) {
             fail("Couldn't read from file");
+        } catch (InvalidTimeBlockException e) {
+            fail("Did not expect InvalidTimeBlockException");
+        }
+    }
+
+    @Test
+    void testInvalidTimeBlock() {
+        JsonReader reader = new JsonReader("./data/testInvalidTimeBlock.json");
+        try {
+            reader.read();
+            fail();
+        } catch (InvalidTimeBlockException e) {
+            //pass
+        } catch (Exception e) {
+            fail("Wrong exception thrown");
         }
     }
 }

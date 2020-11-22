@@ -1,0 +1,19 @@
+[
+  {
+    "label" : "TestBusyDay",
+    "timeBlocks" : [
+      {
+        "label" : "work",
+        "startTime" : "09:00",
+        "endTime" : "17:00",
+        "color" : "RED"
+      },
+      {
+        "label" : "dinner",
+        "startTime" : "18:00",
+        "endTime" : "17:00",
+        "color" : "YELLOW"
+      }
+    ]
+  }
+]

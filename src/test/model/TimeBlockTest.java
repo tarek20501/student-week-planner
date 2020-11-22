@@ -1,5 +1,6 @@
 package model;
 
+import exception.InvalidTimeBlockException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,8 +13,12 @@ public class TimeBlockTest {
 
     @BeforeEach
     void setupTest() {
-        redTimeBlock = new TimeBlock("11:00", "12:00", TimeBlock.Color.RED);
-        yellowTimeBlock = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0), TimeBlock.Color.YELLOW);
+        try {
+            redTimeBlock = new TimeBlock("11:00", "12:00", TimeBlock.Color.RED);
+            yellowTimeBlock = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0), TimeBlock.Color.YELLOW);
+        } catch (InvalidTimeBlockException e) {
+            fail();
+        }
         assertEquals("11:00", redTimeBlock.getStringStartTime());
         assertEquals("12:00", redTimeBlock.getStringEndTime());
     }
@@ -29,5 +34,15 @@ public class TimeBlockTest {
         assertEquals("test", redTimeBlock.getLabel());
         assertEquals(TimeBlock.Color.RED, redTimeBlock.getColor());
         assertEquals(TimeBlock.Color.YELLOW, yellowTimeBlock.getColor());
+    }
+
+    @Test
+    void testInvalidTimeBlock() {
+        try {
+            new TimeBlock(LocalTime.of(11,0), LocalTime.of(10,0));
+            fail();
+        } catch (InvalidTimeBlockException e) {
+            //pass
+        }
     }
 }

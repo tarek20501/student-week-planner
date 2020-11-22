@@ -1,5 +1,6 @@
 package persistence;
 
+import exception.InvalidTimeBlockException;
 import model.Day;
 import model.TimeBlock;
 import org.json.JSONArray;
@@ -26,7 +27,7 @@ public class JsonReader {
     // Adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
     // EFFECTS: read week plan from a file and returns a list of days
     // throws IOException if an error occurs reading data from file
-    public List<Day> read() throws IOException {
+    public List<Day> read() throws IOException, InvalidTimeBlockException {
         String jsonData = readFile(source);
         JSONArray jsonArray = new JSONArray(jsonData);
         return parseDays(jsonArray);
@@ -46,7 +47,7 @@ public class JsonReader {
 
     // Adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
     // EFFECTS: returns list of days from json array
-    private List<Day> parseDays(JSONArray jsonArray) {
+    private List<Day> parseDays(JSONArray jsonArray) throws InvalidTimeBlockException {
         List<Day> days = new ArrayList<>();
 
         for (Object json : jsonArray) {
@@ -59,7 +60,7 @@ public class JsonReader {
 
     // Adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
     // EFFECTS: returns a day from a json object
-    private Day parseDay(JSONObject jsonObject) {
+    private Day parseDay(JSONObject jsonObject) throws InvalidTimeBlockException {
         String label = jsonObject.getString("label");
         Day day = new Day(label);
 
@@ -74,15 +75,13 @@ public class JsonReader {
 
     // Adapted from https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
     // EFFECTS: returns a time block from a json object
-    private TimeBlock parseTimeBlock(JSONObject jsonObject) {
+    private TimeBlock parseTimeBlock(JSONObject jsonObject) throws InvalidTimeBlockException {
         String label = jsonObject.getString("label");
         String  start = jsonObject.getString("startTime");
         String end = jsonObject.getString("endTime");
         String color = jsonObject.getString("color");
-
         TimeBlock timeBlock = new TimeBlock(start, end, TimeBlock.Color.valueOf(color));
         timeBlock.setLabel(label);
-
         return timeBlock;
     }
 }

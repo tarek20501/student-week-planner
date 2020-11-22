@@ -10,7 +10,6 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -129,8 +128,8 @@ public class WeekPanel extends JPanel implements MouseListener {
                 return;
             }
             loadDayPanels(loadedWeek);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 

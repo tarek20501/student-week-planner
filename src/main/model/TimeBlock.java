@@ -1,5 +1,6 @@
 package model;
 
+import exception.InvalidTimeBlockException;
 import org.json.JSONObject;
 import persistence.Writable;
 import java.time.format.DateTimeParseException;
@@ -19,39 +20,42 @@ public class TimeBlock implements Writable {
     private String label;
     private Color color;
 
-    // REQUIRES: start time is earlier than end time
     // EFFECTS: initializes start and end times of this time block to start and end
     // respectively. label of this day is initialized to empty string.
-    public TimeBlock(LocalTime start, LocalTime end) {
+    // throws InvalidTimeBlockException if start time is after end time
+    public TimeBlock(LocalTime start, LocalTime end) throws InvalidTimeBlockException {
+        if (start.isAfter(end)) {
+            throw new InvalidTimeBlockException();
+        }
         startTime = start;
         endTime = end;
         label = "";
         color = Color.UNDEFINED;
     }
 
-    // REQUIRES: start time is earlier than end time
     // EFFECTS: initializes start and end times of this time block to start and end
     // respectively given in String HH:MM. label of this day is initialized to empty string.
+    // throws InvalidTimeBlockException if start time is after end time
     // throws DateTimeParseException if time is not "HH:MM"
-    public TimeBlock(String start, String end) throws DateTimeParseException {
+    public TimeBlock(String start, String end) throws InvalidTimeBlockException, DateTimeParseException {
         this(parseTime(start), parseTime(end));
     }
 
-    // REQUIRES: start time is earlier than end time
     // EFFECTS: initializes start and end times of this time block to start and end
     // respectively. label of this day is initialized to empty string.
     // the color of time block is initialized to color
-    public TimeBlock(LocalTime start, LocalTime end, Color color) {
+    // throws InvalidTimeBlockException if start time is after end time
+    public TimeBlock(LocalTime start, LocalTime end, Color color) throws InvalidTimeBlockException {
         this(start, end);
         this.color = color;
     }
 
-    // REQUIRES: start time is earlier than end time
     // EFFECTS: initializes start and end times of this time block to start and end
     // respectively given in String HH:MM. label of this day is initialized to empty string.
-    // throws DateTimeParseException if time is not "HH:MM"
     // the color of time block is initialized to color
-    public TimeBlock(String start, String end, Color color) {
+    // throws InvalidTimeBlockException if start time is after end time
+    // throws DateTimeParseException if time is not "HH:MM"
+    public TimeBlock(String start, String end, Color color) throws InvalidTimeBlockException, DateTimeParseException {
         this(start, end);
         this.color = color;
     }
@@ -113,7 +117,7 @@ public class TimeBlock implements Writable {
         return label;
     }
 
-    //EFFECTS: returns the color of this bloc
+    // EFFECTS: returns the color of this bloc
     public Color getColor() {
         return color;
     }

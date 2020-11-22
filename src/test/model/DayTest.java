@@ -1,5 +1,6 @@
 package model;
 
+import exception.InvalidTimeBlockException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +19,12 @@ class DayTest {
 
     @Test
     public void testAddTimeBlockEmptyDay() {
-        TimeBlock timeBlock = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
+        TimeBlock timeBlock = null;
+        try {
+            timeBlock = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
+        } catch (InvalidTimeBlockException e) {
+            fail("Did not expect an exception");
+        }
         assertTrue(testDay.addTimeBlock(timeBlock));
         assertEquals(1, testDay.getTimeBlocks().size());
         assertTrue(testDay.getTimeBlocks().contains(timeBlock));
@@ -26,9 +32,17 @@ class DayTest {
 
     @Test
     public void testAddTimeBlockNoConflictGap() {
-        TimeBlock timeBlock1 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
-        TimeBlock timeBlock2 = new TimeBlock(LocalTime.of(13,0), LocalTime.of(14,0));
-        TimeBlock timeBlock3 = new TimeBlock(LocalTime.of(8,0), LocalTime.of(9,0));
+        TimeBlock timeBlock1 = null;
+        TimeBlock timeBlock2 = null;
+        TimeBlock timeBlock3 = null;
+        try {
+            timeBlock1 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
+            timeBlock2 = new TimeBlock(LocalTime.of(13,0), LocalTime.of(14,0));
+            timeBlock3 = new TimeBlock(LocalTime.of(8,0), LocalTime.of(9,0));
+        } catch (InvalidTimeBlockException e) {
+            fail("Did not expect an exception");
+        }
+
         assertTrue(testDay.addTimeBlock(timeBlock1));
         assertTrue(testDay.addTimeBlock(timeBlock2));
         assertTrue(testDay.addTimeBlock(timeBlock3));
@@ -37,9 +51,17 @@ class DayTest {
 
     @Test
     public void testAddTimeBlockNoConflictNoGap() {
-        TimeBlock timeBlock1 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
-        TimeBlock timeBlock2 = new TimeBlock(LocalTime.of(11,0), LocalTime.of(12,0));
-        TimeBlock timeBlock3 = new TimeBlock(LocalTime.of(9,0), LocalTime.of(10,0));
+        TimeBlock timeBlock1 = null;
+        TimeBlock timeBlock2 = null;
+        TimeBlock timeBlock3 = null;
+        try {
+            timeBlock1 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
+            timeBlock2 = new TimeBlock(LocalTime.of(11,0), LocalTime.of(12,0));
+            timeBlock3 = new TimeBlock(LocalTime.of(9,0), LocalTime.of(10,0));
+        } catch (InvalidTimeBlockException e) {
+            fail("Did not expect an exception");
+        }
+
         assertTrue(testDay.addTimeBlock(timeBlock1));
         assertTrue(testDay.addTimeBlock(timeBlock2));
         assertTrue(testDay.addTimeBlock(timeBlock3));
@@ -48,9 +70,17 @@ class DayTest {
 
     @Test
     public void testAddTimeBlockConflictStartInAnother() {
-        TimeBlock timeBlock1 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
-        TimeBlock timeBlock2 = new TimeBlock(LocalTime.of(10,30), LocalTime.of(12,0));
-        TimeBlock timeBlock3 = new TimeBlock(LocalTime.of(10,30), LocalTime.of(11,0));
+        TimeBlock timeBlock1 = null;
+        TimeBlock timeBlock2 = null;
+        TimeBlock timeBlock3 = null;
+        try {
+            timeBlock1 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
+            timeBlock2 = new TimeBlock(LocalTime.of(10,30), LocalTime.of(12,0));
+            timeBlock3 = new TimeBlock(LocalTime.of(10,30), LocalTime.of(11,0));
+        } catch (InvalidTimeBlockException e) {
+            fail("Did not expect an exception");
+        }
+
         assertTrue(testDay.addTimeBlock(timeBlock1));
         assertFalse(testDay.addTimeBlock(timeBlock2));
         assertFalse(testDay.addTimeBlock(timeBlock3));
@@ -59,9 +89,18 @@ class DayTest {
 
     @Test
     public void testAddTimeBlockConflictEndInAnother() {
-        TimeBlock timeBlock1 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
-        TimeBlock timeBlock2 = new TimeBlock(LocalTime.of(9,0), LocalTime.of(10,30));
-        TimeBlock timeBlock3 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(10,30));
+        TimeBlock timeBlock1 = null;
+        TimeBlock timeBlock2 = null;
+        TimeBlock timeBlock3 = null;
+        try {
+            timeBlock1 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
+            timeBlock2 = new TimeBlock(LocalTime.of(9,0), LocalTime.of(10,30));
+            timeBlock3 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(10,30));
+
+        } catch (InvalidTimeBlockException e) {
+            fail("Did not expect an exception");
+        }
+
         assertTrue(testDay.addTimeBlock(timeBlock1));
         assertFalse(testDay.addTimeBlock(timeBlock2));
         assertFalse(testDay.addTimeBlock(timeBlock3));
@@ -70,8 +109,15 @@ class DayTest {
 
     @Test
     public void testAddTimeBlockConflictStartAndEndInAnother() {
-        TimeBlock timeBlock1 = new TimeBlock(LocalTime.of(9,0), LocalTime.of(12,0));
-        TimeBlock timeBlock2 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
+        TimeBlock timeBlock1 = null;
+        TimeBlock timeBlock2 = null;
+        try {
+            timeBlock1 = new TimeBlock(LocalTime.of(9,0), LocalTime.of(12,0));
+            timeBlock2 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
+        } catch (InvalidTimeBlockException e) {
+            fail("Did not expect an exception");
+        }
+
         assertTrue(testDay.addTimeBlock(timeBlock1));
         assertFalse(testDay.addTimeBlock(timeBlock2));
         assertEquals(1, testDay.getTimeBlocks().size());
@@ -79,8 +125,15 @@ class DayTest {
 
     @Test
     public void testAddTimeBlockConflictSameStartAndEnd() {
-        TimeBlock timeBlock1 = new TimeBlock(LocalTime.of(9,0), LocalTime.of(12,0));
-        TimeBlock timeBlock2 = new TimeBlock(LocalTime.of(9,0), LocalTime.of(12,0));
+        TimeBlock timeBlock1 = null;
+        TimeBlock timeBlock2 = null;
+        try {
+            timeBlock1 = new TimeBlock(LocalTime.of(9,0), LocalTime.of(12,0));
+            timeBlock2 = new TimeBlock(LocalTime.of(9,0), LocalTime.of(12,0));
+        } catch (InvalidTimeBlockException e) {
+            fail("Did not expect an exception");
+        }
+
         assertTrue(testDay.addTimeBlock(timeBlock1));
         assertFalse(testDay.addTimeBlock(timeBlock2));
         assertEquals(1, testDay.getTimeBlocks().size());
@@ -88,8 +141,15 @@ class DayTest {
 
     @Test
     public void testAddTimeBlockConflictSameStart() {
-        TimeBlock timeBlock1 = new TimeBlock(LocalTime.of(9,0), LocalTime.of(12,0));
-        TimeBlock timeBlock2 = new TimeBlock(LocalTime.of(9,0), LocalTime.of(13,0));
+        TimeBlock timeBlock1 = null;
+        TimeBlock timeBlock2 = null;
+        try {
+            timeBlock1 = new TimeBlock(LocalTime.of(9,0), LocalTime.of(12,0));
+            timeBlock2 = new TimeBlock(LocalTime.of(9,0), LocalTime.of(13,0));
+        } catch (InvalidTimeBlockException e) {
+            fail("Did not expect an exception");
+        }
+
         assertTrue(testDay.addTimeBlock(timeBlock1));
         assertFalse(testDay.addTimeBlock(timeBlock2));
         assertEquals(1, testDay.getTimeBlocks().size());
@@ -97,8 +157,15 @@ class DayTest {
 
     @Test
     public void testAddTimeBlockConflictSameEnd() {
-        TimeBlock timeBlock1 = new TimeBlock(LocalTime.of(9,0), LocalTime.of(12,0));
-        TimeBlock timeBlock2 = new TimeBlock(LocalTime.of(8,0), LocalTime.of(12,0));
+        TimeBlock timeBlock1 = null;
+        TimeBlock timeBlock2 = null;
+        try {
+            timeBlock1 = new TimeBlock(LocalTime.of(9,0), LocalTime.of(12,0));
+            timeBlock2 = new TimeBlock(LocalTime.of(8,0), LocalTime.of(12,0));
+        } catch (InvalidTimeBlockException e) {
+            fail("Did not expect an exception");
+        }
+
         assertTrue(testDay.addTimeBlock(timeBlock1));
         assertFalse(testDay.addTimeBlock(timeBlock2));
         assertEquals(1, testDay.getTimeBlocks().size());
@@ -106,8 +173,15 @@ class DayTest {
 
     @Test
     public void testAddTimeBlockConflictAnotherInside() {
-        TimeBlock timeBlock1 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
-        TimeBlock timeBlock2 = new TimeBlock(LocalTime.of(9,0), LocalTime.of(12,0));
+        TimeBlock timeBlock1 = null;
+        TimeBlock timeBlock2 = null;
+        try {
+            timeBlock1 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
+            timeBlock2 = new TimeBlock(LocalTime.of(9,0), LocalTime.of(12,0));
+        } catch (InvalidTimeBlockException e) {
+            fail("Did not expect an exception");
+        }
+
         assertTrue(testDay.addTimeBlock(timeBlock1));
         assertFalse(testDay.addTimeBlock(timeBlock2));
         assertEquals(1, testDay.getTimeBlocks().size());
@@ -115,7 +189,12 @@ class DayTest {
 
     @Test
     public void testDeleteTimeBlockExist() {
-        TimeBlock timeBlock = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
+        TimeBlock timeBlock = null;
+        try {
+            timeBlock = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
+        } catch (InvalidTimeBlockException e) {
+            fail("Did not expect an exception");
+        }
         assertTrue(testDay.addTimeBlock(timeBlock));
         assertEquals(1, testDay.getTimeBlocks().size());
         assertTrue(testDay.deleteTimeBlock(timeBlock));
@@ -124,8 +203,15 @@ class DayTest {
 
     @Test
     public void testDeleteTimeBlockNotExist() {
-        TimeBlock timeBlock1 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
-        TimeBlock timeBlock2 = new TimeBlock(LocalTime.of(12,0), LocalTime.of(13,0));
+        TimeBlock timeBlock1 = null;
+        TimeBlock timeBlock2 = null;
+        try {
+            timeBlock1 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
+            timeBlock2 = new TimeBlock(LocalTime.of(12,0), LocalTime.of(13,0));
+        } catch (InvalidTimeBlockException e) {
+            fail("Did not expect an exception");
+        }
+
         assertTrue(testDay.addTimeBlock(timeBlock1));
         assertEquals(1, testDay.getTimeBlocks().size());
         assertFalse(testDay.deleteTimeBlock(timeBlock2));
@@ -134,7 +220,12 @@ class DayTest {
 
     @Test
     public void testModifyTimeBlockSameDayNoConflict() {
-        TimeBlock timeBlock = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
+        TimeBlock timeBlock = null;
+        try {
+            timeBlock = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
+        } catch (InvalidTimeBlockException e) {
+            fail("Did not expect an exception");
+        }
         assertTrue(testDay.addTimeBlock(timeBlock));
         assertEquals(1, testDay.getTimeBlocks().size());
 
@@ -151,8 +242,15 @@ class DayTest {
 
     @Test
     public void testModifyTimeBlockSameDayConflict() {
-        TimeBlock timeBlock1 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
-        TimeBlock timeBlock2 = new TimeBlock(LocalTime.of(11,0), LocalTime.of(12,0));
+        TimeBlock timeBlock1 = null;
+        TimeBlock timeBlock2 = null;
+        try {
+            timeBlock1 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
+            timeBlock2 = new TimeBlock(LocalTime.of(11,0), LocalTime.of(12,0));
+        } catch (InvalidTimeBlockException e) {
+            fail("Did not expect an exception");
+        }
+
         assertTrue(testDay.addTimeBlock(timeBlock1));
         assertTrue(testDay.addTimeBlock(timeBlock2));
         assertEquals(2, testDay.getTimeBlocks().size());
@@ -168,7 +266,12 @@ class DayTest {
 
     @Test
     public void testModifyTimeBlockAnotherDayNoConflict() {
-        TimeBlock timeBlock = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
+        TimeBlock timeBlock = null;
+        try {
+            timeBlock = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
+        } catch (InvalidTimeBlockException e) {
+            fail("Did not expect an exception");
+        }
         Day anotherDay = new Day("AnotherDay");
 
         assertTrue(testDay.addTimeBlock(timeBlock));
@@ -190,8 +293,15 @@ class DayTest {
 
     @Test
     public void testModifyTimeBlockAnotherDayConflict() {
-        TimeBlock timeBlock1 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
-        TimeBlock timeBlock2 = new TimeBlock(LocalTime.of(11,0), LocalTime.of(12,0));
+        TimeBlock timeBlock1 = null;
+        TimeBlock timeBlock2 = null;
+        try {
+            timeBlock1 = new TimeBlock(LocalTime.of(10,0), LocalTime.of(11,0));
+            timeBlock2 = new TimeBlock(LocalTime.of(11,0), LocalTime.of(12,0));
+        } catch (InvalidTimeBlockException e) {
+            fail("Did not expect an exception");
+        }
+
         Day anotherDay = new Day("AnotherDay");
 
         assertTrue(testDay.addTimeBlock(timeBlock1));

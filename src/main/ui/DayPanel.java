@@ -1,5 +1,6 @@
 package ui;
 
+import exception.InvalidTimeBlockException;
 import model.Day;
 import model.TimeBlock;
 
@@ -56,12 +57,16 @@ public class DayPanel extends JPanel {
     // MODIFIES: this
     // EFFECTS: wraps Day.addTimeBlock function in the low end
     public void addTimeBlockLabel(LocalTime start, LocalTime end, TimeBlock.Color color) {
-        TimeBlock timeBlock = new TimeBlock(start, end, color);
-        if (day.addTimeBlock(timeBlock)) {
-            TimeBlockLabel timeBlockLabel = new TimeBlockLabel(timeBlock);
-            timeBlockLabels.add(timeBlockLabel);
-            this.add(timeBlockLabel,0);
-            this.repaint();
+        try {
+            TimeBlock timeBlock = new TimeBlock(start, end, color);
+            if (day.addTimeBlock(timeBlock)) {
+                TimeBlockLabel timeBlockLabel = new TimeBlockLabel(timeBlock);
+                timeBlockLabels.add(timeBlockLabel);
+                this.add(timeBlockLabel,0);
+                this.repaint();
+            }
+        } catch (InvalidTimeBlockException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 
