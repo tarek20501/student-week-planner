@@ -40,7 +40,7 @@ public class TimeBlockTest {
     void testInvalidTimeBlock() {
         try {
             new TimeBlock(LocalTime.of(11,0), LocalTime.of(10,0));
-            fail();
+            fail("Expected an exception!!!");
         } catch (InvalidTimeBlockException e) {
             //pass
         }

@@ -18,8 +18,8 @@ you need to go through to set a calendar event all of which are unnecessary for 
 I have not found an app that is simple and quick-to-use to plan when I am doing what.
 
 ## User Stories
-- As a student, I want to add my busy time to my weekly planner by drawing red boxes. (*)
-- As a student, I want to add my to-do tasks to my weekly planner by drawing yellow boxes. (*)
+- As a student, I want to add my busy time to my weekly planner by drawing red boxes.
+- As a student, I want to add my to-do tasks to my weekly planner by drawing yellow boxes.
 - As a student, I want to label the boxes with few words after drawing them and modify the labels later.
 - As a student, I want to see the areas where I did not draw any box in green to visualize my free time.
 - As a student, I want to delete the any box by selecting the box and pressing delete.
@@ -27,7 +27,11 @@ I have not found an app that is simple and quick-to-use to plan when I am doing 
 - As a student, I want to save my week plan to a file.
 - As a student, I want to load my week plan from a file.
 
-(*) I counted these stories as one for phase 1 since colors have not implemented yet. So what is implemented is users can add time blocks to their weekly planner.
+## Phase 4: Task 2
+- I chose to test and design a class in your model package that is robust
+- Robust class in model is Timeblock.
+- The method that throws a checked exception is the constructor of TimeBlock.
+- Tests cases when expection is expected and when it is not can be found in TimeBlockTest
 
 ## UML Diagram:
 <img src="https://yuml.me/tarek20501/StudentWeekPlanner.jpg"></img>
