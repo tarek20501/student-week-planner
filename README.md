@@ -40,3 +40,5 @@ I have not found an app that is simple and quick-to-use to plan when I am doing 
 - `WeekPanel` always has 7 `DayPanel`'s representing 7 days a week.
 - Each of `DayPanel` and `TimeBlockLabel` wraps the functions of its back-end counterpart, 
 `Day` and `TimeBlock` respectively, and it handles front-end related features.
+- Each of `Day` and `DayPanel` keeps track of time blocks in it (`TimeBLock` and `TimeBlockLabel` respectively).
+- Both `Day` and `TimeBlock` implement `Writable` since their data is saved persistently. 
