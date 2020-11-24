@@ -33,5 +33,10 @@ I have not found an app that is simple and quick-to-use to plan when I am doing 
 - The method that throws a checked exception is the constructor of TimeBlock.
 - Tests cases when expection is expected and when it is not can be found in TimeBlockTest
 
-## UML Diagram:
-<img src="https://yuml.me/tarek20501/StudentWeekPlanner.jpg"></img>
+## Phase 4: Task 3
+- This software system is made of `WeekPanel` and `ToolsPanel` created by `WeekPlannerFrame`.
+- `ToolsPanel` is associated to `WeekPanel` to call save and load methods from `WeekPanel`.
+- `WeekPanel` has a dependency on `JsonReader` and `JsonWriter` to load and save persistent data.
+- `WeekPanel` always has 7 `DayPanel`'s representing 7 days a week.
+- Each of `DayPanel` and `TimeBlockLabel` wraps the functions of its back-end counterpart, 
+`Day` and `TimeBlock` respectively, and it handles front-end related features.
