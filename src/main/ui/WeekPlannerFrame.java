@@ -5,8 +5,6 @@ import java.awt.*;
 
 // initialize all gui components and add them to the window
 public class WeekPlannerFrame extends JFrame {
-    private final WeekPanel weekPanel;
-
     public static int COLUMN_WIDTH = 150;
     public static int COLUMN_HEIGHT = 800;
     public static int NUMBER_OF_ROWS = 16;
@@ -32,7 +30,7 @@ public class WeekPlannerFrame extends JFrame {
         this.setResizable(true);
         this.setBackground(MIDNIGHT_BLUE);
 
-        weekPanel = new WeekPanel();
+        WeekPanel weekPanel = new WeekPanel();
         this.add(BorderLayout.CENTER, weekPanel);
         this.add(BorderLayout.WEST, new TimePanel());
         this.add(BorderLayout.NORTH, new ToolsPanel(weekPanel));

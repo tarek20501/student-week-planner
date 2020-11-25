@@ -28,8 +28,8 @@ I have not found an app that is simple and quick-to-use to plan when I am doing 
 - As a student, I want to load my week plan from a file.
 
 ## Phase 4: Task 2
-- I chose to test and design a class in your model package that is robust
-- Robust class in model is Timeblock.
+- I chose to test and design a class in model package that is robust
+- Robust class in model is TimeBlock.
 - The method that throws a checked exception is the constructor of TimeBlock.
 - Tests cases when expection is expected and when it is not can be found in TimeBlockTest
 
@@ -41,4 +41,9 @@ I have not found an app that is simple and quick-to-use to plan when I am doing 
 - Each of `DayPanel` and `TimeBlockLabel` wraps the functions of its back-end counterpart, 
 `Day` and `TimeBlock` respectively, and it handles front-end related features.
 - Each of `Day` and `DayPanel` keeps track of time blocks in it (`TimeBLock` and `TimeBlockLabel` respectively).
-- Both `Day` and `TimeBlock` implement `Writable` since their data is saved persistently. 
+- `CalendarPanel` is an abstract class that define common functionality between `WeekPanel` and `DayPanel`.
+- Both `Day` and `TimeBlock` implement `Writable` since their data is saved persistently.
+### Refactoring:
+- The content of the method `handleMouseCommands` in `WeekPanel` is very hard to read and 
+it could use some refactoring. This refactoring would be splitting up the content of `handleMouseCommands`
+into multiple functions to make this method easier to read.
