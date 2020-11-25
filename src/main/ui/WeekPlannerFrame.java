@@ -5,6 +5,8 @@ import java.awt.*;
 
 // initialize all gui components and add them to the window
 public class WeekPlannerFrame extends JFrame {
+    private final WeekPanel weekPanel;
+
     public static int COLUMN_WIDTH = 150;
     public static int COLUMN_HEIGHT = 800;
     public static int NUMBER_OF_ROWS = 16;
@@ -30,7 +32,7 @@ public class WeekPlannerFrame extends JFrame {
         this.setResizable(true);
         this.setBackground(MIDNIGHT_BLUE);
 
-        WeekPanel weekPanel = new WeekPanel();
+        weekPanel = new WeekPanel();
         this.add(BorderLayout.CENTER, weekPanel);
         this.add(BorderLayout.WEST, new TimePanel());
         this.add(BorderLayout.NORTH, new ToolsPanel(weekPanel));
@@ -38,14 +40,8 @@ public class WeekPlannerFrame extends JFrame {
         this.setVisible(true);
     }
 
-    // REQUIRES: panel has height equal to week panel's height
-    // EFFECTS: returns the height of a cell in the calendar
-    public static int getCellHeight(JPanel panel) {
-        return panel.getHeight() / NUMBER_OF_ROWS;
-    }
-
     // a vertical panel with hours starting from 9:00 till 23:00
-    private static class TimePanel extends JPanel {
+    private static class TimePanel extends CalendarPanel {
 
         // EFFECTS: setup the panel with NULL layout
         public TimePanel() {
@@ -61,7 +57,7 @@ public class WeekPlannerFrame extends JFrame {
             super.paint(g);
             Graphics2D g2d = (Graphics2D)g;
 
-            int cellHeight = getCellHeight(this);
+            int cellHeight = getCellHeight();
             int startHour = START_HOUR;
             g2d.setColor(Color.WHITE);
             for (int i = 1; i < NUMBER_OF_ROWS; i++) {

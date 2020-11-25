@@ -17,7 +17,7 @@ import java.util.List;
 import static ui.WeekPlannerFrame.*;
 
 // week panel connects day panels (columns) in a row forming a calendar
-public class WeekPanel extends JPanel implements MouseListener {
+public class WeekPanel extends CalendarPanel implements MouseListener {
     private List<DayPanel> dayPanels;
     private volatile LocalTime pressTime;
     private volatile LocalTime releaseTime;
@@ -76,8 +76,8 @@ public class WeekPanel extends JPanel implements MouseListener {
 
     // EFFECTS: trim pixelY such that it stays between 9:00 and 23:59
     private int trimY(int pixelY) {
-        int lowerLimit = getCellHeight(this);
-        int upperLimit = getCellHeight(this) * NUMBER_OF_ROWS - 1;
+        int lowerLimit = getCellHeight();
+        int upperLimit = getCellHeight() * NUMBER_OF_ROWS - 1;
         if (pixelY < lowerLimit) {
             return lowerLimit;
         } else if (pixelY > upperLimit) {
@@ -169,7 +169,7 @@ public class WeekPanel extends JPanel implements MouseListener {
 
     // EFFECTS: convert y coordinate in pixels to time
     private LocalTime pixel2Time(int y) {
-        int cellHeight = getCellHeight(this);
+        int cellHeight = getCellHeight();
         int hour = (y / cellHeight + (START_HOUR - 1)) % 24;
         int minute = (int)(((float)(y % cellHeight) / (float)cellHeight) * 59);
         return LocalTime.of(hour, minute);

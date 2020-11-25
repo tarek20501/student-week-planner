@@ -13,7 +13,7 @@ import java.util.List;
 import static ui.WeekPlannerFrame.*;
 
 // Green vertical panel that houses color coded time blocks
-public class DayPanel extends JPanel {
+public class DayPanel extends CalendarPanel {
     private final Day day;
     private final JLabel dayLabel;
     private final List<TimeBlockLabel> timeBlockLabels;
@@ -111,7 +111,7 @@ public class DayPanel extends JPanel {
         dayLabel.setForeground(Color.WHITE);
         dayLabel.setOpaque(true);
         dayLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        dayLabel.setBounds(0, 0, this.getWidth(), getCellHeight(this));
+        dayLabel.setBounds(0, 0, this.getWidth(), getCellHeight());
     }
 
     // EFFECTS: update grid width and height based on this panel size
@@ -122,8 +122,8 @@ public class DayPanel extends JPanel {
     // EFFECTS: update time block bounds based on this panel size
     private void drawTimeBlocks() {
         for (TimeBlockLabel timeBlockLabel : timeBlockLabels) {
-            int startPixel = timeBlockLabel.getStartPixel(getCellHeight(this));
-            int endPixel = timeBlockLabel.getEndPixel(getCellHeight(this));
+            int startPixel = timeBlockLabel.getStartPixel(getCellHeight());
+            int endPixel = timeBlockLabel.getEndPixel(getCellHeight());
             timeBlockLabel.setBounds(0,
                     startPixel,
                     this.getWidth(),
@@ -132,7 +132,7 @@ public class DayPanel extends JPanel {
     }
 
     // grid made of equally distanced horizontal lines and one vertical line to the left of the panel
-    private static class GridPanel extends JPanel {
+    private static class GridPanel extends CalendarPanel {
         // EFFECTS: setup this panel with null layout and make it transparent
         public GridPanel() {
             setOpaque(false);
@@ -151,12 +151,12 @@ public class DayPanel extends JPanel {
         private void drawGrid(Graphics2D g2d) {
             g2d.setColor(EMERALD);
             for (int i = 1; i < NUMBER_OF_ROWS; i++) {
-                int y = getCellHeight(this) * i;
+                int y = getCellHeight() * i;
                 g2d.drawLine(0, y, this.getWidth(), y);
             }
             g2d.drawLine(0,0, 0, this.getHeight());
             g2d.setColor(WET_ASPHALT);
-            g2d.drawLine(0,0, 0, getCellHeight(this));
+            g2d.drawLine(0,0, 0, getCellHeight());
         }
     }
 }
