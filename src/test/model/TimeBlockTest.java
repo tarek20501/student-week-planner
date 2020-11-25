@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 
 public class TimeBlockTest {
     private TimeBlock redTimeBlock;
@@ -43,6 +44,18 @@ public class TimeBlockTest {
             fail("Expected an exception!!!");
         } catch (InvalidTimeBlockException e) {
             //pass
+        }
+    }
+
+    @Test
+    void testInvalidTime() {
+        try {
+            new TimeBlock("11", "12");
+            fail("Expected an exception!!!");
+        } catch (InvalidTimeBlockException e) {
+            fail("Wrong exception thrown");
+        } catch (DateTimeParseException e) {
+            // pass
         }
     }
 }

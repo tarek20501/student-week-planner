@@ -6,6 +6,7 @@ import model.TimeBlock;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -67,6 +68,19 @@ public class JsonReaderTest extends JsonTest {
             fail();
         } catch (InvalidTimeBlockException e) {
             //pass
+        } catch (Exception e) {
+            fail("Wrong exception thrown");
+        }
+    }
+
+    @Test
+    void testInvalidTime() {
+        JsonReader reader = new JsonReader("./data/testInvalidTime.json");
+        try {
+            reader.read();
+            fail();
+        } catch (DateTimeParseException e) {
+            // pass
         } catch (Exception e) {
             fail("Wrong exception thrown");
         }
