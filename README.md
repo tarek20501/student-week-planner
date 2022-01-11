@@ -29,5 +29,3 @@ I have not found an app that is simple and quick-to-use to plan when I am doing 
 
 ## Try it out:
 Download [student-week-planner.jar](https://github.com/tarek20501/student-week-planner/blob/main/out/artifacts/student_week_planner_jar/student-week-planner.jar?raw=true) and run it in your system.
-
-Note: I started this project to satisfy a component in CPSC210 course at UBC, and I intend to continue developing it.
